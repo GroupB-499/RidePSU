@@ -1,0 +1,38 @@
+<main>
+    <div class="account-container">
+      <div class="account-details">
+        <h2>Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          
+          <label for="email">Email</label>
+          <input
+            formControlName="email"
+            type="email"
+            id="email"style="width: 96%;"
+            placeholder="Enter your email"
+            required
+          />
+  
+          <label for="password">Password</label>
+          <input
+            formControlName="password"
+            type="password"style="width: 96%;"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+  
+          <div class="alternate-login" style="text-align: end;">
+            <a routerLink="/reset">Reset password</a>
+          </div>
+          <button type="submit" style="width: 100%;margin-top: 20px;">Login</button>
+          <div class="separator" style="margin-top: 20px; text-align: center; font-size: 20px;">OR</div>
+  <br>
+          <div class="alternate-login" style="text-align: center;">
+            Don't have an account? <a routerLink="/signup">Sign Up</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+  

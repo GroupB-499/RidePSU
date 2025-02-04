@@ -1,0 +1,19 @@
+<div class="modal-backdrop">
+    <div class="modal-content">
+      <h2>Enter OTP</h2>
+      <p>An OTP has been sent to your email: <strong>{{ email }}</strong></p>
+      
+      <div class="otp-container">
+        <!-- Individual OTP input fields with separate variables -->
+        <input type="text" maxlength="1" [(ngModel)]="otp1" (input)="focusNext($event, 1)" />
+        <input type="text" maxlength="1" [(ngModel)]="otp2" (input)="focusNext($event, 2)" />
+        <input type="text" maxlength="1" [(ngModel)]="otp3" (input)="focusNext($event, 3)" />
+        <input type="text" maxlength="1" [(ngModel)]="otp4" (input)="focusNext($event, 4)" />
+        <input type="text" maxlength="1" [(ngModel)]="otp5" (input)="focusNext($event, 5)" />
+        <input type="text" maxlength="1" [(ngModel)]="otp6" (input)="focusNext($event, 6)" />
+      </div>
+  
+      <button (click)="verifyOtp()">Verify OTP</button>
+    </div>
+  </div>
+  

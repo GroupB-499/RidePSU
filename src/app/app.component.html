@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> -->
+</head>
+<body>
+    <div *ngIf="isLoggedIn">
+    <header>
+        <div class="top-bar">
+            <img src="./../assets/ridepsu.png" alt="Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a routerLink="/home">Home</a></li>
+                    <li><a routerLink="/map">Live Tracking</a></li>
+                    <li><a routerLink="/schedules">Schedules</a></li>
+                    <!-- <li><a href="account.html" class="user-profile"><i class="fas fa-user"></i> Account</a></li> -->
+                    <li (click)="logout()"><a class="user-profile"><i class="fas fa-user"></i> Log Out</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    </div>
+  <router-outlet></router-outlet>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<app-otp-modal *ngIf="showOtpModal" [email]="email" (otpVerified)="handleOtpResult($event)"></app-otp-modal>
+
+<main>
+    <div class="account-container">
+      <div class="account-details">
+        <h2>Sign Up</h2>
+        <form [formGroup]="accountForm" (ngSubmit)="openOtpModal()">
+          <label for="name">Name</label>
+          <input formControlName="name" type="text" id="name" placeholder="Enter your name" required />
+  
+          <label for="email">Email</label>
+          <input formControlName="email" type="email" id="email" placeholder="Enter your email" required />
+  
+          <label for="password">Password</label>
+          <input formControlName="password" type="password" id="password" placeholder="Enter your password" required />
+  
+          <label for="phone">Phone</label>
+          <input formControlName="phone" type="text" id="phone" placeholder="Enter your phone number" required />
+  
+          <label for="role">Role</label>
+          <div class="radio-group">
+            <input type="radio" id="user" value="user" formControlName="role" />
+            <label for="user">Passenger</label>
+  
+            <input type="radio" id="driver" value="driver" formControlName="role" />
+            <label for="driver">Driver</label>
+          </div>
+  
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  

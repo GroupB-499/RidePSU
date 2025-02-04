@@ -1,0 +1,580 @@
+
+
+body {
+    font-family: 'Frutiger LT Arabic', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+h2{
+    text-align: center;
+}
+/* Logo and Navigation Styles */
+header .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+}
+.radio-group {
+    display: flex;
+    gap: 1rem; /* Adds space between the buttons */
+    align-items: center; /* Aligns the buttons vertically */
+}
+.radio-group label {
+    display: flex;
+    align-items: center; /* Aligns radio button and label text */
+    gap: 0.2rem; /* Small gap between the radio button and its label */
+}
+.radio-group input {
+    width: 20px!important;
+}
+
+header .top-bar .logo {
+    width: 65px; /* Adjust width as needed */
+    height: 60px; /* Maintain aspect ratio */
+    display: block;
+}
+
+header {
+    background-color: #0090bf;
+    color: white;
+    padding: 0.5em 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Center all navigation items */
+    gap: 2em; /* Spacing between items */
+}
+
+nav ul li {
+    margin: 0;
+    cursor: pointer;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+/* Main Content */
+main {
+    padding: 2em;
+}
+
+/* Homepage Options */
+.homepage-options .options {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2em;
+    gap: 1em; /* Space between buttons */
+}
+
+.homepage-options .option {
+    text-align: center;
+    background-color: white;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 45%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; /* Remove underline for links */
+    color: inherit; /* Maintain text color */
+    display: block; /* Make the <a> act as a block */
+}
+
+.homepage-options .option:hover {
+    transform: translateY(-5px); /* Hover lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+}
+
+.homepage-options .option img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1em;
+}
+
+.homepage-options .option h3 {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.homepage-options .option p {
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Login Form */
+.login form {
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 2em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login form label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.login form input {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.login form button {
+    width: 100%;
+    padding: 0.5em;
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.login form button:hover {
+    background-color: #005bb5;
+}
+
+/* Live Tracking */
+.live-tracking #map-container {
+    margin: 2em auto;
+    width: 90%;
+    max-width: 800px;
+    height: 400px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+}
+
+/* Map Section */
+.map-section {
+    margin: 2em auto;
+    text-align: center;
+}
+
+#map-container {
+    margin: 1em auto;
+    width: 90%;
+    max-width: 800px;
+    height: 400px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+}
+
+/* Schedule Section */
+.schedule-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 2em auto;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.schedule-table th,
+.schedule-table td {
+    border: 1px solid #ddd;
+    padding: 0.8em;
+}
+
+.schedule-table th {
+    background-color: #0090bf;
+    color: white;
+    font-weight: bold;
+}
+
+.schedule-table td {
+    background-color: #f9f9f9;
+}
+
+.schedule-table button {
+    padding: 0.5em 1em;
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.schedule-table button:hover {
+    background-color: #005bb5;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* CSS for Large Banner Image */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Adjust the height as needed */
+    overflow: hidden;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.banner::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+    pointer-events: none; /* Ensures the gradient doesn't interfere with interactions */
+}
+
+/* Login Container */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 2em auto; /* Centers the container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container h2 {
+    margin-bottom: 1em;
+    text-align: center;
+    color: #333;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    color: #555;
+    width: 100%;
+    text-align: left;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 0.8em;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.login-container button {
+    width: 100%!important;
+    padding: 0.8em;
+    background-color: #0090bf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-container button:hover {
+    background-color: #0078a3;
+}
+
+.login-container .separator {
+    text-align: center;
+    margin: 2em 0;
+    color: #aaa;
+    font-size: 0.9em;
+}
+
+.login-container .separator::before,
+.login-container .separator::after {
+    content: "";
+    display: inline-block;
+    width: 40%;
+    height: 1px;
+    background-color: #ddd;
+    vertical-align: middle;
+}
+
+.login-container .separator::before {
+    margin-right: 0.5em;
+}
+
+.login-container .separator::after {
+    margin-left: 0.5em;
+}
+
+.login-container .alternate-login {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.login-container .alternate-login a {
+    color: #0090bf;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-container .alternate-login a:hover {
+    text-decoration: underline;
+}
+
+/* Banner Section */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Adjust height for the login page */
+    overflow: hidden;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* General Media Query for Small Screens */
+@media (max-width: 768px) {
+    /* Header */
+    header .top-bar {
+        flex-direction: column; /* Stack logo and navigation */
+        align-items: center;
+    }
+
+    nav ul {
+        flex-direction: column; /* Stack navigation links vertically */
+        gap: 0.5em; /* Reduce spacing */
+    }
+
+    header .top-bar .logo {
+        width: 80px; /* Reduce logo size */
+    }
+
+    /* Login Container */
+    .login-container {
+        max-width: 90%; /* Use more screen width on small screens */
+        padding: 1.5em;
+    }
+
+    .login-container h2 {
+        font-size: 1.2em; /* Reduce font size */
+    }
+
+    .login-container input,
+    .login-container button {
+        font-size: 0.9em; /* Reduce font size */
+        padding: 0.6em; /* Reduce padding */
+    }
+
+    .login-container .separator {
+        font-size: 0.8em; /* Adjust separator text size */
+    }
+
+    .login-container .alternate-login {
+        font-size: 0.8em; /* Adjust alternate login text size */
+    }
+
+    /* Schedule Table */
+    .schedule-table {
+        font-size: 0.8em; /* Adjust font size for smaller screens */
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 0.5em; /* Reduce padding for cells */
+    }
+
+    .schedule-table button {
+        font-size: 0.8em; /* Reduce button font size */
+        padding: 0.4em 0.8em; /* Reduce button padding */
+    }
+
+    /* Banner */
+    .banner {
+        height: 200px; /* Reduce banner height */
+    }
+
+    .banner img {
+        object-fit: contain; /* Adjust image scaling */
+    }
+
+    /* Options Section */
+    .homepage-options .options {
+        flex-direction: column; /* Stack options vertically */
+        gap: 1em; /* Add spacing */
+    }
+
+    .homepage-options .option {
+        width: 90%; /* Adjust width for small screens */
+    }
+}
+.account-container {
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 1em;
+    border: 2px solid #ddd;
+}
+
+.profile-picture button {
+    padding: 0.5em 1em;
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.profile-picture button:hover {
+    background-color: #005bb5;
+}
+
+.account-details h2 {
+    text-align: center;
+    margin-bottom: 1em;
+    color: #333;
+}
+
+.account-details label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    color: #555;
+}
+
+.account-details input {
+    width: 100%;
+    padding: 0.8em;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.account-details button {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #0090bf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.account-details button:hover {
+    background-color: #0078a3;
+}
+
+
+/* Media Query for Extra Small Screens */
+@media (max-width: 480px) {
+    /* Header */
+    nav ul {
+        font-size: 0.9em; /* Reduce font size for navigation */
+    }
+
+    /* Login Container */
+    .login-container {
+        padding: 1em;
+    }
+
+    .login-container h2 {
+        font-size: 1em; /* Further reduce font size */
+    }
+
+    .login-container input,
+    .login-container button {
+        font-size: 0.8em; /* Further reduce font size */
+        padding: 0.5em; /* Adjust padding */
+    }
+
+    /* Schedule Table */
+    .schedule-table {
+        font-size: 0.7em; /* Reduce font size further */
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 0.4em; /* Adjust padding for extra small screens */
+    }
+
+    .schedule-table button {
+        font-size: 0.7em; /* Adjust button font size */
+        padding: 0.3em 0.6em; /* Adjust button padding */
+    }
+
+    /* Options Section */
+    .homepage-options .option {
+        padding: 1em; /* Adjust padding */
+        width: 100%; /* Make options full width */
+    }
+
+    /* Banner */
+    .banner {
+        height: 150px; /* Further reduce banner height */
+    }
+
+    .banner img {
+        object-fit: cover; /* Keep image covered */
+    }
+}

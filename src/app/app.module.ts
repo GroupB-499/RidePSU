@@ -15,6 +15,7 @@ import { OtpModalComponent } from './otp-modal/otp-modal.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { SignupComponent } from './signup/signup.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { EditAccountComponent } from './edit-account/edit-account.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     HomeComponent,
     MapScreenComponent,
     OtpModalComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    EditAccountComponent
   ],
   imports: [
     BrowserModule,

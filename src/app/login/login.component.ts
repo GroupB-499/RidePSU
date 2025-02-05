@@ -39,7 +39,7 @@ export class LoginComponent {
     this.http.post('http://localhost:3000/api/login', loginData).subscribe({
       next: (response:any) => {
         if (response) {
-          this.authService.login(response.token);
+          this.authService.login(response.user, response.token);
           console.log(response);
           alert("Logged in successfully!");
           this.router.navigate(['/home']);

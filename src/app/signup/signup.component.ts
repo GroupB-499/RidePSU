@@ -61,7 +61,7 @@ export class SignupComponent {
       next: (response: any) => {
         alert(response.message || 'Signup successful!');
         
-        this.authService.login(response.token);
+        this.authService.login(response.user, response.token);
         this.accountForm.reset();
         this.router.navigate(['/home']);
       },

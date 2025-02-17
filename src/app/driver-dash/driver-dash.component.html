@@ -1,0 +1,44 @@
+<div class="schedule-container">
+    <h2>Your Schedules</h2>
+  
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Start Time</th>
+            <th>Pickup Locations</th>
+            <th>Transport Type</th>
+            <th>Dropoff Locations</th>
+  
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let group of groupedSchedules; let i = index">
+            <tr *ngFor="let schedule of group.schedules; let j = index">
+              <!-- Merge rows for same start time -->
+              <td *ngIf="j === 0" [attr.rowspan]="group.schedules.length">{{ schedule.time }}</td>
+  
+              <td>
+                <div class="location-list">
+                  <div *ngFor="let pickup of schedule.pickupLocations" class="location-item">
+                    {{ pickup }}
+                  </div>
+                </div>
+              </td>
+              <td>{{ schedule.transportType }}</td>
+  
+              <td>
+                <div class="location-list">
+                  <div *ngFor="let dropoff of schedule.dropoffLocations" class="location-item">
+                    {{ dropoff }}
+                  </div>
+                </div>
+              </td>
+  
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

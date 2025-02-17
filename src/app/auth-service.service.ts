@@ -6,8 +6,17 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem('authToken'));
+  private isPassenger = new BehaviorSubject<boolean>(
+    (() => {
+      const userInfo = localStorage.getItem('userInfo');
+      return userInfo ? JSON.parse(userInfo).role !== 'driver' : false;
+    })()
+  );
+  
+  
   private userInfo: any = null; // Store user info
   isLoggedIn$ = this.loggedIn.asObservable(); // Observable for components to subscribe to
+  isPassenger$ = this.isPassenger.asObservable(); // Observable for components to subscribe to
 
   constructor() { }
 
@@ -38,6 +47,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userInfo');
     this.loggedIn.next(false); // Update login status
   }
 

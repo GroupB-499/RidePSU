@@ -63,7 +63,12 @@ export class SignupComponent {
         
         this.authService.login(response.user, response.token);
         this.accountForm.reset();
-        this.router.navigate(['/home']);
+        if(response.user.role == "user"){
+          this.router.navigate(['/home']);
+
+        }else{
+          this.router.navigate(['/driverDash']);
+        }
       },
       error: (error) => {
         console.error('Error during signup:', error);

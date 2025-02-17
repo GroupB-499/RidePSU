@@ -9,6 +9,7 @@ import { AuthService } from './auth-service.service';
 })
 export class AppComponent implements  OnInit {
   isLoggedIn = false;
+  isPassenger = false;
 
   constructor(private router: Router,private authService: AuthService) {}
 
@@ -17,6 +18,15 @@ export class AppComponent implements  OnInit {
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
     });
+    this.authService.isPassenger$.subscribe((status)=>{
+      this.isPassenger = status;
+    });
+  }
+
+  showDropdown = false;
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
   }
 
   

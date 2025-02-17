@@ -1,0 +1,48 @@
+<main class="plan-trip">
+    <section class="trip-form">
+        <h2>Plan Your Trip</h2>
+
+        <form [formGroup]="tripForm" (ngSubmit)="bookRide()">
+            <label for="departure">Departure Location:</label>
+            <select id="departure" formControlName="departure">
+                <option value="" disabled selected>Select a departure</option> 
+                <option *ngFor="let location of departureLocations" [value]="location.value">
+                    {{ location.label }}
+                </option>
+            </select>
+
+            <label for="destination">Destination:</label>
+            <select id="destination" formControlName="destination">
+                <option value="" disabled selected>Select a destination</option> 
+
+                <option *ngFor="let dest of filteredDestinations" [value]="dest.value">
+                    {{ dest.label }}
+                </option>
+            </select>
+
+            <label>Transport Type:</label>
+<p>Your vehicle will be a {{ tripForm.get('transportType')?.value }}</p>
+
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" formControlName="date" [min]="minDate">
+
+            <label for="time">Select Time:</label>
+            <select id="time" formControlName="time">
+                <option *ngFor="let time of availableTimes" [value]="time">{{ time }}</option>
+            </select>
+
+            <button type="button" (click)="checkBookingAvailability()">Check Availability</button>
+<p *ngIf="bookingCount !== null && bookingCount < 13 ">Booking is available {{ bookingCount }}/13</p>
+<p *ngIf="bookingCount !== null && bookingCount >= 13 ">Booking is not available {{ bookingCount }}/13</p>
+
+
+            <button type="submit" [disabled]="tripForm.invalid">Book a Ride</button>
+        </form>
+    </section>
+    
+    <section class="map-container" style="top: 0; bottom: 0; height: 300px;">
+    <app-maps></app-maps>
+
+    </section>
+    
+</main>

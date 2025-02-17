@@ -492,6 +492,51 @@ footer {
     margin-bottom: 1em;
     color: #333;
 }
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 150px;
+    display: block;
+    z-index: 1000;
+  }
+  
+  .dropdown-menu li {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    width: 100%;
+  }
+  
+  .dropdown-menu li:hover {
+    background: #f4f4f4;
+  }
+  
+
+.account-details {
+    text-align: center;
+}
+
+.account-details form {
+    text-align: left;
+}
 
 .account-details label {
     display: block;
@@ -520,6 +565,92 @@ footer {
     cursor: pointer;
     transition: background-color 0.2s;
 }
+
+/* Main Layout */
+.plan-trip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2em;
+    gap: 2em;
+}
+.trip-form {
+    flex: 1;
+    max-width: 400px;
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.trip-form h2 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.trip-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.trip-form select,
+.trip-form input {
+    width: 100%;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+.trip-form select {
+    width: 100%;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: white;
+    cursor: pointer;
+}
+
+.trip-form button {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #0090bf;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+.trip-form button:hover {
+    background-color: #0078a3;
+}
+/* Map Section */
+.map-section {
+    margin: 2em auto;
+    text-align: center;
+}
+
+.map-container {
+    flex: 2;
+    min-width: 500px;
+    height: 600px;
+    background-color: #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#map-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
 
 .account-details button:hover {
     background-color: #0078a3;
@@ -577,4 +708,8 @@ footer {
     .banner img {
         object-fit: cover; /* Keep image covered */
     }
+    
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

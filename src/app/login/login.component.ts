@@ -42,7 +42,12 @@ export class LoginComponent {
           this.authService.login(response.user, response.token);
           console.log(response);
           alert("Logged in successfully!");
-          this.router.navigate(['/home']);
+          if(response.user.role == "user"){
+            this.router.navigate(['/home']);
+
+          }else{
+            this.router.navigate(['/driverDash']);
+          }
         } else {
           alert("Error during login. Please try again later.");
         }

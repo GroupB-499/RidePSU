@@ -90,13 +90,14 @@ filteredDestinations: { value: string, label: string }[] = [];
 checkBookingAvailability(): void {
     const selectedDate = this.tripForm.get('date')?.value;
     const selectedTime = this.tripForm.get('time')?.value;
+    const selectedTransport = this.tripForm.get('transportType')?.value;
 
-    if (!selectedDate || !selectedTime) {
-        alert('Please select both date and time first.');
+    if (!selectedDate || !selectedTime || !selectedTransport) {
+        alert('Please select date, time and transport type first.');
         return;
     }
 
-    const url = `http://localhost:3000/api/booking-count?date=${selectedDate}&time=${selectedTime}`;
+    const url = `http://localhost:3000/api/booking-count?date=${selectedDate}&time=${selectedTime}&transportType=${selectedTransport}`;
 
     this.http.get<{ count: number }>(url).subscribe(
         (response) => {
@@ -128,6 +129,7 @@ checkBookingAvailability(): void {
   bookRide(): void {
     if (this.tripForm.valid) {
         const userId = this.authService.getUserInfo().userId;
+        
         const formData = { ...this.tripForm.value, userId };
 
         this.http.post(this.apiUrl, formData).subscribe(

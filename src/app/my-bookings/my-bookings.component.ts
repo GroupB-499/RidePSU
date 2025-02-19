@@ -29,11 +29,12 @@ export class MyBookingsComponent {
   cancelBooking(bookingId: string): void {
     const confirmed = confirm('Are you sure you want to cancel this booking?');
     if (confirmed) {
-      this.http.delete(`http://localhost:3000/api/delete-booking/${bookingId}`)
+      this.http.delete(`http://localhost:3000/api/delete-booking?bookingId=${bookingId}`)
         .subscribe({
           next: () => {
             alert('Booking cancelled successfully');
-            this.getBookings(); // Refresh the booking list after cancellation
+            this.bookings = [];
+            this.getBookings();
           },
           error: (error) => {
             console.error('Error cancelling booking:', error);

@@ -3,7 +3,7 @@
     <div class="account-container">
       <div class="account-details">
         <h2>Account Information</h2>
-        <form [formGroup]="accountForm" (ngSubmit)="update()">
+        <form [formGroup]="accountForm" (ngSubmit)="shouldSendOtp()">
           <label for="name">Name</label>
           <input formControlName="name" type="text" id="name" placeholder="Enter your name" required />
   

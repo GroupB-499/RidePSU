@@ -15,6 +15,7 @@ export class MapsComponent implements OnInit {
   locations: any[] = [];
 
   constructor(private http: HttpClient) {}
+  private static rtlPluginInitialized = false; // Ensure the plugin is only loaded once
 
   ngOnInit() {
     // Initialize the map
@@ -25,12 +26,16 @@ export class MapsComponent implements OnInit {
       zoom: 15,
       center: [this.lng, this.lat]
     });
-    mapboxgl.setRTLTextPlugin(
-      'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
-      null!,
-      true // Lazy load the plugin
+    if (!MapsComponent.rtlPluginInitialized) {
+      (mapboxgl as any).setRTLTextPlugin(
+        'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
+        () => {
+          console.log('RTL Plugin Loaded');
+        },
+        true // This forces reloading, but we already prevent multiple calls
       );
-
+      MapsComponent.rtlPluginInitialized = true; 
+    }
     // Fetch locations from the backend
     this.fetchLocations();
   }

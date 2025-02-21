@@ -37,11 +37,16 @@ export class AuthService {
 
 
   login(response: any, token:string) {
+    
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userInfo');
+
     this.setUserInfo(response);
     if(token !== '' || token !== null){
 
       localStorage.setItem('authToken', token);
       this.loggedIn.next(true); // Update login status
+      this.isPassenger.next(response.role == 'user'?true:false); // Update passenger status
     }
   }
 

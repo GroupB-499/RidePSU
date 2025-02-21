@@ -3,19 +3,19 @@
         <h2>Plan Your Trip</h2>
 
         <form [formGroup]="tripForm" (ngSubmit)="bookRide()">
-            <label for="departure">Departure Location:</label>
-            <select id="departure" formControlName="departure">
-                <option value="" disabled selected>Select a departure</option> 
-                <option *ngFor="let location of departureLocations" [value]="location.value">
+            <label for="pickup">Pickup Location:</label>
+            <select id="pickup" formControlName="pickup">
+                <option value="" disabled selected>Select a Pickup</option> 
+                <option *ngFor="let location of pickupLocations" [value]="location.value">
                     {{ location.label }}
                 </option>
             </select>
 
-            <label for="destination">Destination:</label>
-            <select id="destination" formControlName="destination">
-                <option value="" disabled selected>Select a destination</option> 
+            <label for="dropoff">Dropoff:</label>
+            <select id="dropoff" formControlName="dropoff">
+                <option value="" disabled selected>Select a Dropoff</option> 
 
-                <option *ngFor="let dest of filteredDestinations" [value]="dest.value">
+                <option *ngFor="let dest of filteredDropoff" [value]="dest.value">
                     {{ dest.label }}
                 </option>
             </select>

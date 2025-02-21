@@ -71,8 +71,8 @@ export class SignupComponent {
         }
       },
       error: (error) => {
-        console.error('Error during signup:', error);
-        alert(error.error?.message || 'Signup failed. Please try again.');
+        console.error('Error during signup:', error.error['error']);
+        alert(error.error['error']);
       }
     });
   }

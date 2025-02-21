@@ -25,6 +25,11 @@ export class MapsComponent implements OnInit {
       zoom: 15,
       center: [this.lng, this.lat]
     });
+    mapboxgl.setRTLTextPlugin(
+      'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
+      null!,
+      true // Lazy load the plugin
+      );
 
     // Fetch locations from the backend
     this.fetchLocations();

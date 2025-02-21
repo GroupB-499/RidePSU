@@ -14,13 +14,13 @@ export class BookingComponent {
   minDate: string = new Date().toISOString().split('T')[0];
   bookingCount:any = null;
 
-  departureLocations = [
+  pickupLocations = [
     { value: 'PSU', label: 'Prince Sultan University' },
     { value: 'King Salman Park Metro Station', label: 'King Salman Park Metro Station' },
     { value: 'Ministry of Education Metro Station', label: 'Ministry of Education Metro Station' }
 ];
 
-destinationOptions: { [key: string]: { value: string, label: string }[] } = {
+dropoffOptions: { [key: string]: { value: string, label: string }[] } = {
     'PSU': [
         { value: 'King Salman Park Metro Station', label: 'King Salman Park Metro Station' },
         { value: 'Ministry of Education Metro Station', label: 'Ministry of Education Metro Station' }
@@ -33,54 +33,54 @@ destinationOptions: { [key: string]: { value: string, label: string }[] } = {
     ]
 };
 
-filteredDestinations: { value: string, label: string }[] = [];
+filteredDropoff: { value: string, label: string }[] = [];
 
 
   constructor(private fb: FormBuilder,private http: HttpClient, private authService: AuthService, private cdRef: ChangeDetectorRef) {
       this.tripForm = this.fb.group({
-          departure: ['', Validators.required],
-          destination: ['', Validators.required],
+          pickup: ['', Validators.required],
+          dropoff: ['', Validators.required],
           transportType: ['shuttlebus', Validators.required],
           date: ['', Validators.required],
           time: ['', Validators.required]
       });
   }
-  private apiUrl = 'http://localhost:3000/api/create-booking'; 
+  private apiUrl = 'http://localhost:3000/api/create-booking';
 
 
   updateTransportType(): void {
-    const departure = this.tripForm.get('departure')?.value;
-    const destination = this.tripForm.get('destination')?.value;
-    console.log(departure, destination);
+    const pickup = this.tripForm.get('pickup')?.value;
+    const dropoff = this.tripForm.get('dropoff')?.value;
+    console.log(pickup, dropoff);
 
-    if ((departure === 'PSU' && destination === 'Ministry of Education Metro Station') || 
-        (departure === 'Ministry of Education Metro Station' && destination === 'PSU')) {
+    if ((pickup === 'PSU' && dropoff === 'Ministry of Education Metro Station') || 
+        (pickup === 'Ministry of Education Metro Station' && dropoff === 'PSU')) {
         this.tripForm.get('transportType')?.setValue('golf car', { emitEvent: false });
     } else {
         this.tripForm.get('transportType')?.setValue('shuttle bus', { emitEvent: false });
     }
 }
   ngOnInit(): void {
-    console.log(typeof this.tripForm.get('departure')?.value);
+    console.log(typeof this.tripForm.get('pickup')?.value);
       this.generateTimeSlots();
-      this.tripForm.get('departure')?.valueChanges.subscribe((departure) => {
-        this.resetAndUpdateDestinations(departure);
+      this.tripForm.get('pickup')?.valueChanges.subscribe((pickup) => {
+        this.resetAndUpdateDropoffs(pickup);
     });
 
-    this.tripForm.get('destination')?.valueChanges.subscribe(() => {
+    this.tripForm.get('dropoff')?.valueChanges.subscribe(() => {
       this.updateTransportType();
   });
   }
-  resetAndUpdateDestinations(departure: string): void {
-    this.tripForm.get('destination')?.setValue('', { emitEvent: false });
+  resetAndUpdateDropoffs(pickup: string): void {
+    this.tripForm.get('dropoff')?.setValue('', { emitEvent: false });
     this.cdRef.detectChanges();
-    if (departure) {
+    if (pickup) {
         
-        this.filteredDestinations = this.destinationOptions[departure] || [];
-        this.tripForm.get('destination')?.enable(); // Enable destination dropdown
+        this.filteredDropoff = this.dropoffOptions[pickup] || [];
+        this.tripForm.get('dropoff')?.enable(); // Enable Dropoffs dropdown
     } else {
-        this.filteredDestinations = [];
-        this.tripForm.get('destination')?.disable(); // Disable if no departure selected
+        this.filteredDropoff = [];
+        this.tripForm.get('dropoff')?.disable(); // Disable if no pickup selected
     }
 
     this.updateTransportType();

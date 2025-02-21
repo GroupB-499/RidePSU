@@ -63,7 +63,13 @@ export class EditAccountComponent {
 
         this.authService.login(response.user, response.token);
         this.accountForm.reset();
+        if(this.authService.getUserInfo().role == 'user'){
         this.router.navigate(['/home']);
+
+        }else{
+        this.router.navigate(['/driverDash']);
+
+        }
       },
       error: (error) => {
         console.error('Error during updation:', error);

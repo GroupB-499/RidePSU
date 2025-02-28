@@ -15,21 +15,21 @@ export class BookingComponent {
   bookingCount:any = null;
 
   pickupLocations = [
-    { value: 'PSU', label: 'Prince Sultan University' },
+    { value: 'Prince Sultan University', label: 'Prince Sultan University' },
     { value: 'King Salman Park Metro Station', label: 'King Salman Park Metro Station' },
     { value: 'Ministry of Education Metro Station', label: 'Ministry of Education Metro Station' }
 ];
 
 dropoffOptions: { [key: string]: { value: string, label: string }[] } = {
-    'PSU': [
+    'Prince Sultan University': [
         { value: 'King Salman Park Metro Station', label: 'King Salman Park Metro Station' },
         { value: 'Ministry of Education Metro Station', label: 'Ministry of Education Metro Station' }
     ],
     'King Salman Park Metro Station': [
-        { value: 'PSU', label: 'Prince Sultan University' }
+        { value: 'Prince Sultan University', label: 'Prince Sultan University' }
     ],
     'Ministry of Education Metro Station': [
-        { value: 'PSU', label: 'Prince Sultan University' }
+        { value: 'Prince Sultan University', label: 'Prince Sultan University' }
     ]
 };
 
@@ -40,7 +40,7 @@ filteredDropoff: { value: string, label: string }[] = [];
       this.tripForm = this.fb.group({
           pickup: ['', Validators.required],
           dropoff: ['', Validators.required],
-          transportType: ['shuttlebus', Validators.required],
+          transportType: ['', Validators.required],
           date: ['', Validators.required],
           time: ['', Validators.required]
       });
@@ -53,8 +53,8 @@ filteredDropoff: { value: string, label: string }[] = [];
     const dropoff = this.tripForm.get('dropoff')?.value;
     console.log(pickup, dropoff);
 
-    if ((pickup === 'PSU' && dropoff === 'Ministry of Education Metro Station') || 
-        (pickup === 'Ministry of Education Metro Station' && dropoff === 'PSU')) {
+    if ((pickup === 'Prince Sultan University' && dropoff === 'Ministry of Education Metro Station') || 
+        (pickup === 'Ministry of Education Metro Station' && dropoff === 'Prince Sultan University')) {
         this.tripForm.get('transportType')?.setValue('golf car', { emitEvent: false });
     } else {
         this.tripForm.get('transportType')?.setValue('shuttle bus', { emitEvent: false });
@@ -90,6 +90,8 @@ filteredDropoff: { value: string, label: string }[] = [];
 checkBookingAvailability(): void {
     const selectedDate = this.tripForm.get('date')?.value;
     const selectedTime = this.tripForm.get('time')?.value;
+    const selectedPickup = this.tripForm.get('pickup')?.value;
+    const selectedDropoff = this.tripForm.get('dropoff')?.value;
     const selectedTransport = this.tripForm.get('transportType')?.value;
 
     if (!selectedDate || !selectedTime || !selectedTransport) {
@@ -97,7 +99,7 @@ checkBookingAvailability(): void {
         return;
     }
 
-    const url = `http://localhost:3000/api/booking-count?date=${selectedDate}&time=${selectedTime}&transportType=${selectedTransport}`;
+    const url = `http://localhost:3000/api/booking-count?date=${selectedDate}&time=${selectedTime}&transportType=${selectedTransport}&pickup=${selectedPickup}&dropoff=${selectedDropoff}`;
 
     this.http.get<{ count: number }>(url).subscribe(
         (response) => {
@@ -105,7 +107,9 @@ checkBookingAvailability(): void {
         },
         (error) => {
             console.error('Error fetching booking count:', error);
-            alert('Failed to check availability.');
+            this.bookingCount = null;
+            alert(`Error: ${error.error['error']}`);
+
         }
     );
 }
@@ -135,7 +139,7 @@ checkBookingAvailability(): void {
         this.http.post(this.apiUrl, formData).subscribe(
             response => {
                 alert('Booking successful!');
-                this.tripForm.reset();
+                // this.tripForm.reset();
             },
             error => {
                 console.error('Error:', error);

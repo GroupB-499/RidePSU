@@ -16,8 +16,8 @@ export class SignupComponent {
 
   accountForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private authService:AuthService,
-      private router: Router,) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService,
+    private router: Router,) { }
 
   ngOnInit(): void {
     this.accountForm = this.fb.group({
@@ -30,13 +30,14 @@ export class SignupComponent {
   }
 
   openOtpModal() {
-    if (this.accountForm.invalid) {
-      alert('Please fill all the fields correctly.');
-      return;
-    }
+    // if (this.accountForm.invalid) {
+    //   alert('Please fill all the fields correctly.');
+    //   return;
+    // }
+    this.signup();
     this.email = this.accountForm.value.email;
     console.log(this.email);
-    this.showOtpModal = true;
+    // this.showOtpModal = true;
   }
 
   handleOtpResult(isVerified: boolean) {
@@ -49,8 +50,16 @@ export class SignupComponent {
   }
 
   signup(): void {
-    if (this.accountForm.invalid) {
-      alert('Please fill all the fields correctly.');
+    // if (this.accountForm.invalid) {
+    //   alert('Please fill all the fields correctly.');
+    //   return;
+    // }
+
+    const password = this.accountForm.get('password')?.value;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/;
+    console.log(password);
+    if (!passwordRegex.test(password)) {
+      alert('Password must have at least 8 characters and 1 uppercase letter, 1 number, and 1 special character.');
       return;
     }
 
@@ -60,13 +69,13 @@ export class SignupComponent {
     this.http.post('http://localhost:3000/api/signup', formData).subscribe({
       next: (response: any) => {
         alert(response.message || 'Signup successful!');
-        
+
         this.authService.login(response.user, response.token);
         this.accountForm.reset();
-        if(response.user.role == "user"){
+        if (response.user.role == "user") {
           this.router.navigate(['/home']);
 
-        }else{
+        } else {
           this.router.navigate(['/driverDash']);
         }
       },

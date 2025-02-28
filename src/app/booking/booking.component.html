@@ -32,11 +32,11 @@
             </select>
 
             <button type="button" (click)="checkBookingAvailability()">Check Availability</button>
-<p *ngIf="bookingCount !== null && bookingCount < 13 ">Booking is available {{ bookingCount }}/13</p>
-<p *ngIf="bookingCount !== null && bookingCount >= 13 ">Booking is not available {{ bookingCount }}/13</p>
+<p *ngIf="bookingCount !== null && bookingCount < 13">Booking is available {{ bookingCount }}/13</p>
+<p *ngIf="bookingCount !== null && bookingCount >= 13">Booking is not available {{ bookingCount }}/13</p>
 
 
-            <button type="submit" [disabled]="tripForm.invalid">Book a Ride</button>
+            <button type="submit" [disabled]="tripForm.invalid || bookingCount >= 13">Book a Ride</button>
         </form>
     </section>
     

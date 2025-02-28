@@ -65,10 +65,18 @@ filteredDropoff: { value: string, label: string }[] = [];
       this.generateTimeSlots();
       this.tripForm.get('pickup')?.valueChanges.subscribe((pickup) => {
         this.resetAndUpdateDropoffs(pickup);
+        this.bookingCount = null;
     });
 
     this.tripForm.get('dropoff')?.valueChanges.subscribe(() => {
       this.updateTransportType();
+      this.bookingCount = null;
+  });
+  this.tripForm.get('time')?.valueChanges.subscribe(()=>{
+    this.bookingCount = null;
+  });
+  this.tripForm.get('date')?.valueChanges.subscribe(()=>{
+    this.bookingCount = null;
   });
   }
   resetAndUpdateDropoffs(pickup: string): void {
@@ -131,6 +139,13 @@ checkBookingAvailability(): void {
       }
   }
   bookRide(): void {
+    if(this.tripForm.invalid){
+        return;
+    }
+    if(this.bookingCount == null || this.bookingCount >= 13){
+        alert("Booking not available!");
+        return;
+    }
     if (this.tripForm.valid) {
         const userId = this.authService.getUserInfo().userId;
         
@@ -139,10 +154,12 @@ checkBookingAvailability(): void {
         this.http.post(this.apiUrl, formData).subscribe(
             response => {
                 alert('Booking successful!');
-                // this.tripForm.reset();
+                this.tripForm.reset();
+                this.bookingCount = null;
             },
             error => {
                 console.error('Error:', error);
+                this.bookingCount = null; 
                 alert('Failed to create booking.');
             }
         );

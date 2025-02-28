@@ -30,14 +30,13 @@ export class SignupComponent {
   }
 
   openOtpModal() {
-    // if (this.accountForm.invalid) {
-    //   alert('Please fill all the fields correctly.');
-    //   return;
-    // }
-    this.signup();
+    if (this.accountForm.invalid) {
+      alert('Please fill all the fields correctly.');
+      return;
+    }
     this.email = this.accountForm.value.email;
     console.log(this.email);
-    // this.showOtpModal = true;
+    this.showOtpModal = true;
   }
 
   handleOtpResult(isVerified: boolean) {
@@ -50,10 +49,10 @@ export class SignupComponent {
   }
 
   signup(): void {
-    // if (this.accountForm.invalid) {
-    //   alert('Please fill all the fields correctly.');
-    //   return;
-    // }
+    if (this.accountForm.invalid) {
+      alert('Please fill all the fields correctly.');
+      return;
+    }
 
     const password = this.accountForm.get('password')?.value;
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/;

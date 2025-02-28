@@ -14,6 +14,7 @@ export class MyBookingsComponent {
 
   ngOnInit(): void {
     this.getBookings();
+   
   }
 
   // Fetch bookings from the API
@@ -22,6 +23,7 @@ export class MyBookingsComponent {
     this.http.get<{ bookings: any[] }>(`http://localhost:3000/api/get-bookings/${userId}`)
       .subscribe(response => {
         this.bookings = response.bookings;
+        console.log(this.bookings.map(e=>{return e;}));
       });
   }
 

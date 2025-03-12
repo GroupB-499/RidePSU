@@ -12,16 +12,21 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DriverDashComponent } from './driver-dash/driver-dash.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { HomeComponent } from './home/home.component';
+import { MapScreenComponent } from './live-tracking/map-screen.component';
 import { LoginComponent } from './login/login.component';
-import { MapScreenComponent } from './map-screen/map-screen.component';
 import { OtpModalComponent } from './otp-modal/otp-modal.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { SignupComponent } from './signup/signup.component';
 
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { AngularFireModule } from '@angular/fire/compat';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+
 import { MapsComponent } from './maps/maps.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +43,12 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
     BookingComponent,
     DriverDashComponent,
     MapsComponent,
-    MyBookingsComponent
+    MyBookingsComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
+    MatSnackBarModule,
     NgxMapboxGLModule.withConfig({
       accessToken: 'pk.eyJ1IjoiaGFzaGlyMTIiLCJhIjoiY2x3NTg1YWNoMWRxeDJpbXV0dXU3dDMxMiJ9.WrBZRJ6L6AnAGPJmr10leA', // Replace with your Mapbox token
     }),
@@ -50,7 +57,11 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    
+    AngularFireModule.initializeApp({"projectId":"ridepsu-8b9fc","appId":"1:996061760535:web:922b8e96b32f8dcc8a6052","storageBucket":"ridepsu-8b9fc.firebasestorage.app","apiKey":"AIzaSyDNfEo3bZ-x8MSh4btnjbgzLONryzrzHpA","authDomain":"ridepsu-8b9fc.firebaseapp.com","messagingSenderId":"996061760535","measurementId":"G-RM2960T6RG"}),
+    provideFirebaseApp(() => initializeApp({"projectId":"ridepsu-8b9fc","appId":"1:996061760535:web:922b8e96b32f8dcc8a6052","storageBucket":"ridepsu-8b9fc.firebasestorage.app","apiKey":"AIzaSyDNfEo3bZ-x8MSh4btnjbgzLONryzrzHpA","authDomain":"ridepsu-8b9fc.firebaseapp.com","messagingSenderId":"996061760535","measurementId":"G-RM2960T6RG"})),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

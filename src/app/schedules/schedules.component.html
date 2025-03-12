@@ -9,7 +9,7 @@
           <th>Pickup Locations</th>
           <th>Transport Type</th>
           <th>Dropoff Locations</th>
-
+          <th>ETA</th> <!-- New ETA Column -->
         </tr>
       </thead>
       <tbody>
@@ -35,6 +35,7 @@
               </div>
             </td>
 
+            <td>{{ schedule.eta }}</td> <!-- Display ETA -->
           </tr>
         </ng-container>
       </tbody>

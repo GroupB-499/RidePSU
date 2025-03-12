@@ -5,9 +5,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DriverDashComponent } from './driver-dash/driver-dash.component';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { HomeComponent } from './home/home.component';
+import { MapScreenComponent } from './live-tracking/map-screen.component';
 import { LoginComponent } from './login/login.component';
-import { MapScreenComponent } from './map-screen/map-screen.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { SignupComponent } from './signup/signup.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'schedules', component: SchedulesComponent },
   { path: 'booking', component: BookingComponent },
+  { path: 'notifications', component: NotificationsComponent },
   { path: 'myBookings', component: MyBookingsComponent },
   { path: 'driverDash', component: DriverDashComponent },
 

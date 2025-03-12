@@ -1,0 +1,16 @@
+<div class="notifications-container">
+    <h2>Notification History</h2>
+    
+    <ul *ngIf="notifications.length > 0; else noNotifications">
+      <li *ngFor="let notification of notifications">
+        <strong>{{ notification.title }}</strong>
+        <p>{{ notification.body }}</p>
+        <small>{{ getFormattedDate(notification.timestamp) }}</small>
+      </li>
+    </ul>
+  
+    <ng-template #noNotifications>
+      <p class="no-notifications">No notifications found.</p>
+    </ng-template>
+  </div>
+  

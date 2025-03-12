@@ -1,0 +1,36 @@
+
+<section class="banner">
+    <img src="https://www.rcrc.gov.sa/wp-content/uploads/2022/11/Banner-metro2-EN.jpg" 
+         alt="Shuttle Services Banner" class="banner-image">
+</section>
+
+<main>
+    <section class="live-tracking">
+        <h2>Live Tracking</h2>
+        <p><strong>ETA for next booking is: </strong> {{ eta }}</p> 
+        <br>
+        <div class="tracking-container">
+            <div class="booking-details" *ngIf="booking">
+                <h3>Upcoming Booking</h3>
+                <p><strong>Date:</strong> {{ booking?.date }}</p>
+                <p><strong>Time:</strong> {{ booking?.time }}</p>
+                <p><strong>Pickup:</strong> {{ booking?.pickup }}</p>
+                <p><strong>Dropoff:</strong> {{ booking?.dropoff }}</p>
+                <p><strong>Transport:</strong> {{ booking?.transportType }}</p>
+                <p *ngIf="!isDriver"><strong>Driver:</strong> {{ booking?.driverName }}</p>
+    
+                <button *ngIf="isDriver && !isRideActive" (click)="startRide()">Start Ride</button>
+                <button *ngIf="isDriver && isRideActive" (click)="stopRide()">Stop Ride</button>
+                
+                <button *ngIf="isDriver" (click)="delayBooking()">Delay Booking</button>
+                <p *ngIf="delayTimer > 0">Booking delayed for: {{ delayTimer }} minutes</p>
+            </div>
+        
+        <div id="map-container">
+            <div id="map" class="match-parent"></div>
+        </div>
+    </div>
+
+    </section>
+</main>
+

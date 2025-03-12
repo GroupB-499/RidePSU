@@ -29,15 +29,44 @@ export class SignupComponent {
     });
   }
 
-  openOtpModal() {
+  async openOtpModal() {
     if (this.accountForm.invalid) {
       alert('Please fill all the fields correctly.');
       return;
     }
+
+    
+      if(await this.checkEmailExists()){
+        alert('Email already exists, please try with another email.');
+        return;
+      }
+
+    const password = this.accountForm.get('password')?.value;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/;
+    console.log(password);
+    if (!passwordRegex.test(password)) {
+      alert('Password must have at least 8 characters(atleast 1 number), 1 uppercase letter and 1 special character.');
+      return;
+    }
+
+    
     this.email = this.accountForm.value.email;
-    console.log(this.email);
+
     this.showOtpModal = true;
   }
+
+  async checkEmailExists(): Promise<boolean> {
+    
+    const email = this.accountForm.get('email')?.value;
+    try {
+      const response = await this.http.get<{ exists: boolean }>(`http://localhost:3000/api/check-email/${email}`).toPromise();
+      return response?.exists ?? false;
+    } catch (error) {
+      console.error('Error checking email:', error);
+      return false; // Default to false in case of error
+    }
+  }
+
 
   handleOtpResult(isVerified: boolean) {
     this.showOtpModal = false;
@@ -54,13 +83,7 @@ export class SignupComponent {
       return;
     }
 
-    const password = this.accountForm.get('password')?.value;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/;
-    console.log(password);
-    if (!passwordRegex.test(password)) {
-      alert('Password must have at least 8 characters and 1 uppercase letter, 1 number, and 1 special character.');
-      return;
-    }
+    
 
     const formData = this.accountForm.value;
 

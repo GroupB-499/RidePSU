@@ -32,3 +32,42 @@
     margin: 5px 0;
     font-size: 16px;
 }
+.styled-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 5px;
+  }
+  
+  .start {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .stop {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .delay {
+    background-color: #005bb5;
+    color: white;
+  }
+  
+  .styled-button:hover {
+    opacity: 0.8;
+  }
+  
+  .styled-input {
+    width: 80px;
+    padding: 8px;
+    margin: 5px 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+  }
+  

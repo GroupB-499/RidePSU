@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth-service.service';
 
 
@@ -11,7 +10,6 @@ import { AuthService } from './auth-service.service';
   providedIn: 'root'
 })
 export class MessagingService {
-  currentMessage = new BehaviorSubject<any>(null);
 
   constructor(private afMessaging: AngularFireMessaging, private snackBar: MatSnackBar, private authService: AuthService, private http: HttpClient, private firestore: AngularFirestore) {}
   private apiUrl = 'http://localhost:3000/api/saveFCMTokens';
@@ -55,21 +53,9 @@ export class MessagingService {
         horizontalPosition: 'center',
       });
 
-      this.saveNotification(this.authService.getUserInfo().userId, title, body);
 
-        this.currentMessage.next(message);
       }
     );
   }
 
-  saveNotification(userId: string, title: string, body: string) {
-    const notification = {
-      userId,
-      title,
-      body,
-      timestamp: new Date() // Firestore handles timestamps automatically
-    };
-
-    return this.firestore.collection('notifications').add(notification);
-  }
 }

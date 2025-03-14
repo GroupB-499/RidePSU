@@ -1,13 +1,12 @@
-
 <section class="banner">
-    <img src="https://www.rcrc.gov.sa/wp-content/uploads/2022/11/Banner-metro2-EN.jpg" 
-         alt="Shuttle Services Banner" class="banner-image">
+    <img src="https://www.rcrc.gov.sa/wp-content/uploads/2022/11/Banner-metro2-EN.jpg" alt="Shuttle Services Banner"
+        class="banner-image">
 </section>
 
 <main>
     <section class="live-tracking">
         <h2>Live Tracking</h2>
-        <p><strong>ETA for next booking is: </strong> {{ eta }}</p> 
+        <p><strong>ETA for next booking is: </strong> {{ eta }}</p>
         <br>
         <div class="tracking-container">
             <div class="booking-details" *ngIf="booking">
@@ -18,19 +17,23 @@
                 <p><strong>Dropoff:</strong> {{ booking?.dropoff }}</p>
                 <p><strong>Transport:</strong> {{ booking?.transportType }}</p>
                 <p *ngIf="!isDriver"><strong>Driver:</strong> {{ booking?.driverName }}</p>
-    
-                <button *ngIf="isDriver && !isRideActive" (click)="startRide()">Start Ride</button>
-                <button *ngIf="isDriver && isRideActive" (click)="stopRide()">Stop Ride</button>
+
                 
-                <button *ngIf="isDriver" (click)="delayBooking()">Delay Booking</button>
+                <label *ngIf="isDriver" for="delayTime">Delay Time (minutes):</label>
+                <input *ngIf="isDriver" type="number" id="delayTime" [(ngModel)]="delayTimer" min="1" max="60" class="styled-input">
+                <button *ngIf="isDriver" (click)="delayBooking()" class="styled-button delay">Delay Booking</button>
                 <p *ngIf="delayTimer > 0">Booking delayed for: {{ delayTimer }} minutes</p>
+
+                <button *ngIf="isDriver && !isRideActive" (click)="startRide()" class="styled-button start">Start
+                    Ride</button>
+                <button *ngIf="isDriver && isRideActive" (click)="stopRide()" class="styled-button stop">Stop
+                    Ride</button>
             </div>
-        
-        <div id="map-container">
-            <div id="map" class="match-parent"></div>
+
+            <div id="map-container">
+                <div id="map" class="match-parent"></div>
+            </div>
         </div>
-    </div>
 
     </section>
 </main>
-

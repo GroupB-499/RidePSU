@@ -27,7 +27,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private wsService: WebSocketService
   ) { }
-
+  customDelayTime: number = 0;
   delayTimer = 0;
 
   ngOnInit() {
@@ -40,10 +40,22 @@ export class MapScreenComponent implements OnInit, OnDestroy {
 
   
   delayBooking() {
+    if (!this.delayTimer || this.delayTimer < 1) {
+      alert("Please enter a valid delay time (1-60 minutes).");
+      return;
+    }
+  
     console.log(this.booking.id);
-    this.delayTimer = 10; // Delay for 10 minutes
-    this.wsService.sendMessage({ type: "ride_delayed", title: "Ride has been delayed", delayTime: this.delayTimer , userId: this.authService.getUserInfo().userId});
+    this.wsService.sendMessage({ 
+      type: "ride_delayed", 
+      title: "Ride has been delayed",
+      userId: this.authService.getUserInfo().userId,
+      delayTime: this.delayTimer,
+      scheduleId:this.booking.id,
+    });
+  
     this.updateDelayTime(this.booking.id, this.delayTimer);
+  
     const interval = setInterval(() => {
       this.delayTimer--;
       if (this.delayTimer <= 0) {
@@ -51,7 +63,6 @@ export class MapScreenComponent implements OnInit, OnDestroy {
       }
     }, 60000);
   }
-
 
   getUserById(userId: string) {
     return this.http.get(`${this.apiUrl}/get-user-by-id/${userId}`);
@@ -117,15 +128,18 @@ export class MapScreenComponent implements OnInit, OnDestroy {
       (response: any) => {
         this.booking = response.booking;
         console.log("Latest Booking:", this.booking);
-        this.getUserById(this.booking.driverId).subscribe({
-          next: (driverResponse: any) => {
-            this.booking.driverName = driverResponse.user.name;
-            console.log("Driver Name:", this.booking.driverName);
-          },
-          error: (error) => {
-            console.error('Error fetching driver details:', error);
-          }
-        });
+        if(!this.isDriver){
+          this.getUserById(this.booking.driverId).subscribe({
+            next: (driverResponse: any) => {
+              this.booking.driverName = driverResponse.user.name;
+              console.log("Driver Name:", this.booking.driverName);
+            },
+            error: (error) => {
+              console.error('Error fetching driver details:', error);
+            }
+          });
+        }
+        
         this.drawRoute(null, null);
         this.calculateETA();
 
@@ -223,13 +237,13 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   startRide() {
     this.isRideActive = true;
     this.trackDriverLocation();
-    this.wsService.sendMessage({ type: "ride_started", userId: this.authService.getUserInfo().userId});
+    this.wsService.sendMessage({ type: "ride_started",userId: this.authService.getUserInfo().userId, scheduleId: this.booking.id});
   }
 
   stopRide() {
     this.isRideActive = false;
     clearInterval(this.interval);
-    this.wsService.sendMessage({ type: "ride_ended", userId: this.authService.getUserInfo().userId});
+    this.wsService.sendMessage({ type: "ride_ended",userId: this.authService.getUserInfo().userId, scheduleId: this.booking.id});
   }
 
   trackDriverLocation() {
@@ -297,9 +311,9 @@ export class MapScreenComponent implements OnInit, OnDestroy {
       );
     }, 5000); // 5-second interval
   }
-  async updateDelayTime(bookingId: string, delayTime: number): Promise<boolean> {
+  async updateDelayTime(scheduleId: string, delayTime: number): Promise<boolean> {
     try {
-      this.http.post<void>("http://localhost:3000/api/update-delay-time", { bookingId, delayTime }).subscribe({next: (response:any)=>{
+      this.http.post<void>("http://localhost:3000/api/update-delay-time", { scheduleId, delayTime }).subscribe({next: (response:any)=>{
         console.log(response.message);
 
       }, error:(error)=>{

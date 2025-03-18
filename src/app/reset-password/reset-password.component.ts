@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { baseUrl } from '../configs';
 
 @Component({
   selector: 'app-reset-password',
@@ -25,7 +26,7 @@ export class ResetPasswordComponent {
 
   resetPassword() {
     if (this.resetPasswordForm.valid) {
-      this.http.post('http://localhost:3000/api/reset-password', { email: this.resetPasswordForm.value.email, newPassword: this.resetPasswordForm.value.password })
+      this.http.post(`${baseUrl}/api/reset-password`, { email: this.resetPasswordForm.value.email, newPassword: this.resetPasswordForm.value.password })
         .subscribe({
           next: () => {
             alert('Password reset successfully!');

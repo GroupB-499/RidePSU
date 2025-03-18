@@ -28,8 +28,12 @@ export class AppComponent implements  OnInit {
 
 
   }
-
+  menuOpen = false;
   showDropdown = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;

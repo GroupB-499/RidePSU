@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AuthService } from '../auth-service.service';
+import { baseUrl } from '../configs';
 
 interface Schedule {
   id: string;
@@ -25,12 +26,15 @@ apiUrl = '';
 
   ngOnInit() {
     const userId = this.authService.getUserInfo().userId;
-    this.apiUrl = `http://localhost:3000/api/get-driver-schedules?driverId=${userId}`;
+    this.apiUrl = `${baseUrl}/api/get-driver-schedules?driverId=${userId}`;
     this.fetchSchedules();
   }
 
   fetchSchedules() {
-    this.http.get<Schedule[]>(this.apiUrl).subscribe({
+    this.http.get<Schedule[]>(this.apiUrl, {
+            headers: new HttpHeaders({
+              'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+            })}).subscribe({
       next: (data) => {
         this.schedules = data;
         this.schedules.sort((a, b) => this.convertToMinutes(a.time) - this.convertToMinutes(b.time));

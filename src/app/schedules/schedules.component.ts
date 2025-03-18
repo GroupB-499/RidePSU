@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { baseUrl } from '../configs';
 
 interface Schedule {
   id: string;
@@ -18,7 +19,7 @@ interface Schedule {
 export class SchedulesComponent implements OnInit {
   schedules: Schedule[] = [];
   groupedSchedules: { time: string; schedules: Schedule[] }[] = [];
-  apiUrl = 'http://localhost:3000/api/get-schedules'; // API endpoint
+  apiUrl = `${baseUrl}/api/get-schedules`; // API endpoint
 
   constructor(private http: HttpClient) {}
 
@@ -27,7 +28,10 @@ export class SchedulesComponent implements OnInit {
   }
 
   fetchSchedules() {
-    this.http.get<Schedule[]>(this.apiUrl).subscribe({
+    this.http.get<Schedule[]>(this.apiUrl, {
+                headers: new HttpHeaders({
+                  'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+                })}).subscribe({
       next: (data) => {
         this.schedules = data;
         this.schedules.sort((a, b) => this.convertToMinutes(a.time) - this.convertToMinutes(b.time));

@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { AuthService } from '../auth-service.service';
+import { baseUrl } from '../configs';
 import { WebSocketService } from '../websocket.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   interval: any;
   routeLayerId = "routeLayer";
   eta: string = 'Calculating...';
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = `${baseUrl}/api`;
   private static rtlPluginInitialized = false;
 
   constructor(
@@ -65,7 +66,9 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   }
 
   getUserById(userId: string) {
-    return this.http.get(`${this.apiUrl}/get-user-by-id/${userId}`);
+    return this.http.get(`${this.apiUrl}/get-user-by-id/${userId}`,{headers: new HttpHeaders({
+                      'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+                    })});
   }
 
   calculateETA() {
@@ -121,10 +124,12 @@ export class MapScreenComponent implements OnInit, OnDestroy {
     const userId = this.authService.getUserInfo().userId;
 
     const endpoint = this.isDriver
-      ? `http://localhost:3000/api/get-upcoming-driver-booking/${userId}`
-      : `http://localhost:3000/api/get-upcoming-booking/${userId}`;
+      ? `${baseUrl}/api/get-upcoming-driver-booking/${userId}`
+      : `${baseUrl}/api/get-upcoming-booking/${userId}`;
 
-    this.http.get(endpoint).subscribe(
+    this.http.get(endpoint, {headers: new HttpHeaders({
+                      'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+                    })}).subscribe(
       (response: any) => {
         this.booking = response.booking;
         console.log("Latest Booking:", this.booking);
@@ -156,7 +161,9 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   }
 
   fetchLocations() {
-    this.http.get('http://localhost:3000/api/locations').subscribe(
+    this.http.get(`${baseUrl}/api/locations`,{headers: new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+    })}).subscribe(
       (response: any) => {
         this.locations = response.locations;
         this.addMarkersToMap();
@@ -306,14 +313,14 @@ export class MapScreenComponent implements OnInit, OnDestroy {
         {
           enableHighAccuracy: true, // High accuracy for precise tracking
           timeout: 15000,           // Increased timeout to 15 seconds
-          maximumAge: 1000          // Allow 1-second-old cached position
+          maximumAge: 2000          // Allow 1-second-old cached position
         }
       );
-    }, 5000); // 5-second interval
+    }, 5000);
   }
   async updateDelayTime(scheduleId: string, delayTime: number): Promise<boolean> {
     try {
-      this.http.post<void>("http://localhost:3000/api/update-delay-time", { scheduleId, delayTime }).subscribe({next: (response:any)=>{
+      this.http.post<void>(`${baseUrl}/api/update-delay-time`, { scheduleId, delayTime }).subscribe({next: (response:any)=>{
         console.log(response.message);
 
       }, error:(error)=>{

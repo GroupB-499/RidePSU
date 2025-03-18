@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { baseUrl } from '../configs';
 
 @Component({
   selector: 'app-otp-modal',
@@ -24,7 +25,7 @@ export class OtpModalComponent implements OnInit {
   }
 
   sendOtp() {
-    this.http.post('http://localhost:3000/api/send-otp', { email: this.email }).subscribe({
+    this.http.post(`${baseUrl}/api/send-otp`, { email: this.email }).subscribe({
       next: () => console.log('OTP Sent!'),
       error: (err) => console.error('Error sending OTP:', err)
     });
@@ -33,7 +34,7 @@ export class OtpModalComponent implements OnInit {
   verifyOtp() {
     const enteredOtp = this.otp1 + this.otp2 + this.otp3 + this.otp4 + this.otp5 + this.otp6;
     
-    this.http.post('http://localhost:3000/api/verify-otp', { email: this.email, otp: enteredOtp }).subscribe({
+    this.http.post(`${baseUrl}/api/verify-otp`, { email: this.email, otp: enteredOtp }).subscribe({
       next: (response: any) => {
           alert('OTP Verified!');
           this.otpVerified.emit(true);

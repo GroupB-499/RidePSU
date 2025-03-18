@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth-service.service';
+import { baseUrl } from '../configs';
 
 @Component({
   selector: 'app-booking',
@@ -45,7 +46,7 @@ filteredDropoff: { value: string, label: string }[] = [];
           time: ['', Validators.required]
       });
   }
-  private apiUrl = 'http://localhost:3000/api/create-booking';
+  private apiUrl = `${baseUrl}/api/create-booking`;
 
 
   updateTransportType(): void {
@@ -107,9 +108,12 @@ checkBookingAvailability(): void {
         return;
     }
 
-    const url = `http://localhost:3000/api/booking-count?date=${selectedDate}&time=${selectedTime}&transportType=${selectedTransport}&pickup=${selectedPickup}&dropoff=${selectedDropoff}`;
+    const url = `${baseUrl}/api/booking-count?date=${selectedDate}&time=${selectedTime}&transportType=${selectedTransport}&pickup=${selectedPickup}&dropoff=${selectedDropoff}`;
 
-    this.http.get<{ count: number }>(url).subscribe(
+    this.http.get<{ count: number }>(url, {
+        headers: new HttpHeaders({
+          'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+        })}).subscribe(
         (response) => {
             this.bookingCount = response.count;
         },

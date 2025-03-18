@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
+import { baseUrl } from '../configs';
 
 @Component({
   selector: 'app-edit-account',
@@ -57,7 +58,7 @@ export class EditAccountComponent {
     const formData = this.accountForm.value;
 
     // Make the HTTP POST request to the signup API
-    this.http.put('http://localhost:3000/api/edit-user', formData).subscribe({
+    this.http.put(`${baseUrl}/api/edit-user`, formData).subscribe({
       next: (response: any) => {
         alert(response.message || 'Updated successfully!');
 

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { baseUrl } from '../configs';
 
 @Component({
   selector: 'app-maps',
@@ -41,7 +42,9 @@ export class MapsComponent implements OnInit {
   }
 
   fetchLocations() {
-    this.http.get('http://localhost:3000/api/locations').subscribe(
+    this.http.get(`${baseUrl}/api/locations`,{headers: new HttpHeaders({
+                          'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+                        })}).subscribe(
       (response: any) => {
         this.locations = response.locations;
         this.addMarkersToMap();

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
+import { baseUrl } from '../configs';
 
 @Component({
   selector: 'app-signup',
@@ -59,7 +60,9 @@ export class SignupComponent {
     
     const email = this.accountForm.get('email')?.value;
     try {
-      const response = await this.http.get<{ exists: boolean }>(`http://localhost:3000/api/check-email/${email}`).toPromise();
+      const response = await this.http.get<{ exists: boolean }>(`${baseUrl}/api/check-email/${email}`,{headers: new HttpHeaders({
+                            'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+                          })}).toPromise();
       return response?.exists ?? false;
     } catch (error) {
       console.error('Error checking email:', error);
@@ -88,7 +91,7 @@ export class SignupComponent {
     const formData = this.accountForm.value;
 
     // Make the HTTP POST request to the signup API
-    this.http.post('http://localhost:3000/api/signup', formData).subscribe({
+    this.http.post(`${baseUrl}/api/signup`, formData).subscribe({
       next: (response: any) => {
         alert(response.message || 'Signup successful!');
 

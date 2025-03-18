@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
+import { baseUrl } from '../configs';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,7 @@ export class LoginComponent {
 
     const loginData = this.loginForm.value;
 
-    this.http.post('http://localhost:3000/api/login', loginData).subscribe({
+    this.http.post(`${baseUrl}/api/login`, loginData).subscribe({
       next: (response:any) => {
         if (response) {
           this.authService.login(response.user, response.token);

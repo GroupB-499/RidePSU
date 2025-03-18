@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth-service.service';
+import { baseUrl } from '../configs';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -8,7 +9,7 @@ import { AuthService } from '../auth-service.service';
 })
 export class NotificationsComponent implements OnInit {
   notifications: any[] = [];
-  private apiUrl = 'http://localhost:3000/api/get-notifications';
+  private apiUrl = `${baseUrl}/api/get-notifications`;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +33,9 @@ export class NotificationsComponent implements OnInit {
   fetchNotifications() {
     const userId = this.authService.getUserInfo().userId;
 
-    this.http.get(`${this.apiUrl}/${userId}`).subscribe({
+    this.http.get(`${this.apiUrl}/${userId}`,{headers: new HttpHeaders({
+                          'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+                        })}).subscribe({
       next: (response: any) => {
         console.log(response);
         this.notifications = response.notifications;

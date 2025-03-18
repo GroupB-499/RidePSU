@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from './auth-service.service';
+import { baseUrl } from './configs';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { AuthService } from './auth-service.service';
 export class MessagingService {
 
   constructor(private afMessaging: AngularFireMessaging, private snackBar: MatSnackBar, private authService: AuthService, private http: HttpClient, private firestore: AngularFirestore) {}
-  private apiUrl = 'http://localhost:3000/api/saveFCMTokens';
+  private apiUrl = `${baseUrl}/api/saveFCMTokens`;
 
   requestPermission() {
     this.afMessaging.requestToken.subscribe(

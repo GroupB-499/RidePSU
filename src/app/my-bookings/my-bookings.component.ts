@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 @Component({
   selector: 'app-my-bookings',
@@ -11,7 +12,7 @@ import { baseUrl } from '../configs';
 export class MyBookingsComponent {
   bookings: any[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService,private toast: ToastService) {}
 
   ngOnInit(): void {
     this.getBookings();
@@ -37,13 +38,13 @@ export class MyBookingsComponent {
       this.http.delete(`${baseUrl}/api/delete-booking?bookingId=${bookingId}`)
         .subscribe({
           next: () => {
-            alert('Booking cancelled successfully');
+            this.toast.show('Booking cancelled successfully', ToastType.SUCCESS);
             this.bookings = [];
             this.getBookings();
           },
           error: (error) => {
             console.error('Error cancelling booking:', error);
-            alert('Error cancelling booking');
+            this.toast.show('Error cancelling booking', ToastType.ERROR);
           }
         });
     }

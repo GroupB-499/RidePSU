@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 interface Schedule {
   id: string;
@@ -22,7 +23,7 @@ apiUrl = '';
   groupedSchedules: { time: string; schedules: Schedule[] }[] = [];
    // API endpoint
 
-  constructor(private http: HttpClient, private authService:AuthService) {}
+  constructor(private http: HttpClient, private authService:AuthService,private toast: ToastService) {}
 
   ngOnInit() {
     const userId = this.authService.getUserInfo().userId;
@@ -43,7 +44,7 @@ apiUrl = '';
       },
       error: (error) => {
         console.error('Error fetching schedules:', error);
-        alert('Failed to load schedules. Please try again later.');
+        this.toast.show('Failed to load schedules. Please try again later.', ToastType.ERROR);
       }
     });
   }

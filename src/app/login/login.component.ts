@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
     private fb: FormBuilder,  
     private http: HttpClient, 
     private router: Router,
-
+private toast: ToastService,
     private authService: AuthService,
   ) {}
 
@@ -42,7 +43,7 @@ export class LoginComponent {
         if (response) {
           this.authService.login(response.user, response.token);
           console.log(response);
-          alert("Logged in successfully!");
+          this.toast.show("Logged in successfully!",ToastType.SUCCESS);
           if(response.user.role == "user"){
             this.router.navigate(['/home']);
 
@@ -50,12 +51,12 @@ export class LoginComponent {
             this.router.navigate(['/driverDash']);
           }
         } else {
-          alert("Error during login. Please try again later.");
+          this.toast.show("Error during login. Please try again later.", ToastType.ERROR);
         }
       },
       error: (error) => {
         this.errorMessage = 'Error during login. Please try again later.';
-        alert(error.error.error || this.errorMessage);
+        this.toast.show(error.error.error || this.errorMessage, ToastType.ERROR);
       }}
     );
   }

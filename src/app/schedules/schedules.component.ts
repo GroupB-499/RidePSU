@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 interface Schedule {
   id: string;
@@ -21,7 +22,7 @@ export class SchedulesComponent implements OnInit {
   groupedSchedules: { time: string; schedules: Schedule[] }[] = [];
   apiUrl = `${baseUrl}/api/get-schedules`; // API endpoint
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private toast: ToastService) {}
 
   ngOnInit() {
     this.fetchSchedules();
@@ -42,7 +43,7 @@ export class SchedulesComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching schedules:', error);
-        alert('Failed to load schedules. Please try again later.');
+        this.toast.show('Failed to load schedules. Please try again later.', ToastType.ERROR);
       }
     });
   }

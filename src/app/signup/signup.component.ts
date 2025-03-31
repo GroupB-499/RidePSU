@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +19,7 @@ export class SignupComponent {
   accountForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService,
-    private router: Router,) { }
+    private router: Router,private toast: ToastService) { }
 
   ngOnInit(): void {
     this.accountForm = this.fb.group({
@@ -32,13 +33,13 @@ export class SignupComponent {
 
   async openOtpModal() {
     if (this.accountForm.invalid) {
-      alert('Please fill all the fields correctly.');
+      this.toast.show('Please fill all the fields correctly.', ToastType.ERROR);
       return;
     }
 
     
       if(await this.checkEmailExists()){
-        alert('Email already exists, please try with another email.');
+        this.toast.show('Email already exists, please try with another email.', ToastType.ERROR);
         return;
       }
 
@@ -46,7 +47,7 @@ export class SignupComponent {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/;
     console.log(password);
     if (!passwordRegex.test(password)) {
-      alert('Password must have at least 8 characters(atleast 1 number), 1 uppercase letter and 1 special character.');
+      this.toast.show('Password must have at least 8 characters(atleast 1 number), 1 uppercase letter and 1 special character.', ToastType.ERROR);
       return;
     }
 
@@ -76,13 +77,13 @@ export class SignupComponent {
     if (isVerified) {
       this.signup();
     } else {
-      alert('OTP Verification Failed');
+      this.toast.show('OTP Verification Failed', ToastType.ERROR);
     }
   }
 
   signup(): void {
     if (this.accountForm.invalid) {
-      alert('Please fill all the fields correctly.');
+      this.toast.show('Please fill all the fields correctly.', ToastType.ERROR);
       return;
     }
 
@@ -93,7 +94,7 @@ export class SignupComponent {
     // Make the HTTP POST request to the signup API
     this.http.post(`${baseUrl}/api/signup`, formData).subscribe({
       next: (response: any) => {
-        alert(response.message || 'Signup successful!');
+        this.toast.show(response.message || 'Signup successful!', ToastType.SUCCESS);
 
         this.authService.login(response.user, response.token);
         this.accountForm.reset();
@@ -106,7 +107,7 @@ export class SignupComponent {
       },
       error: (error) => {
         console.error('Error during signup:', error.error['error']);
-        alert(error.error['error']);
+        this.toast.show(error.error['error'], ToastType.ERROR);
       }
     });
   }

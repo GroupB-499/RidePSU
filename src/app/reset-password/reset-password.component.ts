@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,7 +14,7 @@ export class ResetPasswordComponent {
   resetPasswordForm: FormGroup;
   showOtpModal = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private toast: ToastService) {
     this.resetPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -29,13 +30,13 @@ export class ResetPasswordComponent {
       this.http.post(`${baseUrl}/api/reset-password`, { email: this.resetPasswordForm.value.email, newPassword: this.resetPasswordForm.value.password })
         .subscribe({
           next: () => {
-            alert('Password reset successfully!');
+            this.toast.show('Password reset successfully!', ToastType.SUCCESS);
             
           this.router.navigate(['/login']);
           },
           error: (err) => {
             console.error('Error sending OTP:', err);
-            alert('Failed to send OTP. Please try again.');
+            this.toast.show('Failed to send OTP. Please try again.', ToastType.ERROR);
           }
         });
     }
@@ -47,7 +48,7 @@ export class ResetPasswordComponent {
     if (isVerified) {
       this.resetPassword();
     } else {
-      alert('Invalid OTP, please try again.');
+      this.toast.show('Invalid OTP, please try again.', ToastType.ERROR);
     }
   }
 }

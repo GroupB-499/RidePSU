@@ -1,0 +1,19 @@
+<div class="ratings-container">
+  <h2>Ride Ended Successfully</h2>
+  <p>Let us know how was your trip.</p>
+
+  <div class="stars">
+    <mat-icon *ngFor="let star of stars; let i = index" 
+              (click)="rate(i + 1)"
+              [class.filled]="i < rating">
+      star
+    </mat-icon>
+  </div>
+
+
+  <textarea [(ngModel)]="feedback" 
+            placeholder="Add a description..." 
+            rows="4"></textarea>
+
+  <button mat-raised-button color="primary" (click)="submitRating()">Submit</button>
+</div>

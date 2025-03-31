@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from './auth-service.service';
 import { baseUrl } from './configs';
 
@@ -12,7 +12,7 @@ import { baseUrl } from './configs';
 })
 export class MessagingService {
 
-  constructor(private afMessaging: AngularFireMessaging, private snackBar: MatSnackBar, private authService: AuthService, private http: HttpClient, private firestore: AngularFirestore) {}
+  constructor(private afMessaging: AngularFireMessaging, private snackBar: MatSnackBar, private authService: AuthService, private http: HttpClient, private router: Router) {}
   private apiUrl = `${baseUrl}/api/saveFCMTokens`;
 
   requestPermission() {
@@ -46,6 +46,10 @@ export class MessagingService {
         console.log('New message received:', message);
         const title = message.notification?.title || 'New Notification';
       const body = message.notification?.body || '';
+    
+      if(title === "Ride Ended"){
+        this.router.navigate(['/ratings']);
+      }
 
       // Show Snackbar popup
       this.snackBar.open(`${title}: ${body}`, 'OK', {

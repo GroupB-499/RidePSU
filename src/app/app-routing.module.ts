@@ -9,6 +9,7 @@ import { MapScreenComponent } from './live-tracking/map-screen.component';
 import { LoginComponent } from './login/login.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { RatingsComponent } from './ratings/ratings.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { SignupComponent } from './signup/signup.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'notifications', component: NotificationsComponent },
   { path: 'myBookings', component: MyBookingsComponent },
   { path: 'driverDash', component: DriverDashComponent },
+  { path: 'ratings', component: RatingsComponent },
 
 ];
 

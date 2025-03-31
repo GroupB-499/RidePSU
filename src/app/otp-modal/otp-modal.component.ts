@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 @Component({
   selector: 'app-otp-modal',
@@ -18,7 +19,7 @@ export class OtpModalComponent implements OnInit {
   otp5: string = '';
   otp6: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private toast: ToastService) {}
 
   ngOnInit() {
     this.sendOtp();
@@ -36,12 +37,12 @@ export class OtpModalComponent implements OnInit {
     
     this.http.post(`${baseUrl}/api/verify-otp`, { email: this.email, otp: enteredOtp }).subscribe({
       next: (response: any) => {
-          alert('OTP Verified!');
+          this.toast.show('OTP Verified!', ToastType.SUCCESS);
           this.otpVerified.emit(true);
           
       },
       error: (err) => {
-        alert('Error verifying OTP');
+        this.toast.show('Error verifying OTP', ToastType.ERROR);
         console.error('Error:', err);
       }
     });

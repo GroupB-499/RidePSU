@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookingComponent } from './booking/booking.component';
@@ -24,9 +24,11 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
+import { provideToastr, ToastrModule } from 'ngx-toastr';
 import { MapsComponent } from './maps/maps.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { RatingsComponent } from './ratings/ratings.component';
 
 @NgModule({
   declarations: [
@@ -44,10 +46,12 @@ import { NotificationsComponent } from './notifications/notifications.component'
     DriverDashComponent,
     MapsComponent,
     MyBookingsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    RatingsComponent
   ],
   imports: [
     BrowserModule,
+    ToastrModule.forRoot(),
     MatSnackBarModule,
     NgxMapboxGLModule.withConfig({
       accessToken: 'pk.eyJ1IjoiaGFzaGlyMTIiLCJhIjoiY2x3NTg1YWNoMWRxeDJpbXV0dXU3dDMxMiJ9.WrBZRJ6L6AnAGPJmr10leA', // Replace with your Mapbox token
@@ -63,7 +67,15 @@ import { NotificationsComponent } from './notifications/notifications.component'
     provideFirebaseApp(() => initializeApp({"projectId":"ridepsu-8b9fc","appId":"1:996061760535:web:922b8e96b32f8dcc8a6052","storageBucket":"ridepsu-8b9fc.firebasestorage.app","apiKey":"AIzaSyDNfEo3bZ-x8MSh4btnjbgzLONryzrzHpA","authDomain":"ridepsu-8b9fc.firebaseapp.com","messagingSenderId":"996061760535","measurementId":"G-RM2960T6RG"})),
     
   ],
-  providers: [],
+  providers: [provideAnimations(), 
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      closeButton: true, // Show close button
+      progressBar: true, // Show progress bar
+      newestOnTop: true, // Show newest toast first
+      preventDuplicates: true // Prevent duplicate messages
+    }),],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

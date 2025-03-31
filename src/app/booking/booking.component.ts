@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-booking',
@@ -37,7 +38,7 @@ dropoffOptions: { [key: string]: { value: string, label: string }[] } = {
 filteredDropoff: { value: string, label: string }[] = [];
 
 
-  constructor(private fb: FormBuilder,private http: HttpClient, private authService: AuthService, private cdRef: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder,private http: HttpClient, private authService: AuthService, private cdRef: ChangeDetectorRef, private toast: ToastService) {
       this.tripForm = this.fb.group({
           pickup: ['', Validators.required],
           dropoff: ['', Validators.required],
@@ -104,7 +105,7 @@ checkBookingAvailability(): void {
     const selectedTransport = this.tripForm.get('transportType')?.value;
 
     if (!selectedDate || !selectedTime || !selectedTransport) {
-        alert('Please select date, time and transport type first.');
+        this.toast.show('Please select date, time and transport type first.');
         return;
     }
 
@@ -120,7 +121,7 @@ checkBookingAvailability(): void {
         (error) => {
             console.error('Error fetching booking count:', error);
             this.bookingCount = null;
-            alert(`Error: ${error.error['error']}`);
+            this.toast.show(`Error: ${error.error['error']}`);
 
         }
     );
@@ -147,7 +148,7 @@ checkBookingAvailability(): void {
         return;
     }
     if(this.bookingCount == null || this.bookingCount >= 13){
-        alert("Booking not available!");
+        this.toast.show("Booking not available!");
         return;
     }
     if (this.tripForm.valid) {
@@ -157,14 +158,14 @@ checkBookingAvailability(): void {
 
         this.http.post(this.apiUrl, formData).subscribe(
             response => {
-                alert('Booking successful!');
+                this.toast.show('Booking successful!');
                 this.tripForm.reset();
                 this.bookingCount = null;
             },
             error => {
                 console.error('Error:', error);
                 this.bookingCount = null; 
-                alert('Failed to create booking.');
+                this.toast.show('Failed to create booking.');
             }
         );
     }

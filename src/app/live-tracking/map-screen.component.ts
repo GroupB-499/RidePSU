@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 import { WebSocketService } from '../websocket.service';
 
 @Component({
@@ -26,7 +27,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private wsService: WebSocketService
+    private wsService: WebSocketService,private toast: ToastService
   ) { }
   customDelayTime: number = 0;
   delayTimer = 0;
@@ -42,7 +43,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   
   delayBooking() {
     if (!this.delayTimer || this.delayTimer < 1) {
-      alert("Please enter a valid delay time (1-60 minutes).");
+      this.toast.show("Please enter a valid delay time (1-60 minutes).", ToastType.ERROR);
       return;
     }
   
@@ -154,7 +155,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
         }
       },
       (error) => {
-        alert("No upcoming booking found!");
+        this.toast.show("No upcoming booking found!", ToastType.ERROR);
         console.error('Error fetching booking:', error);
       }
     );

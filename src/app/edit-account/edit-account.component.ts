@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 @Component({
   selector: 'app-edit-account',
@@ -17,7 +18,7 @@ export class EditAccountComponent {
 
   private initUserData: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService,
+  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService,private toast: ToastService,
     private router: Router,) { }
 
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class EditAccountComponent {
     if (isVerified) {
       this.update();
     } else {
-      alert('Invalid OTP, please try again.');
+      this.toast.show('Invalid OTP, please try again.', ToastType.ERROR);
     }
   }
 
@@ -51,7 +52,7 @@ export class EditAccountComponent {
 
   update(): void {
     if (this.accountForm.invalid) {
-      alert('Please fill all the fields correctly.');
+      this.toast.show('Please fill all the fields correctly.', ToastType.ERROR);
       return;
     }
 
@@ -60,7 +61,7 @@ export class EditAccountComponent {
     // Make the HTTP POST request to the signup API
     this.http.put(`${baseUrl}/api/edit-user`, formData).subscribe({
       next: (response: any) => {
-        alert(response.message || 'Updated successfully!');
+        this.toast.show(response.message || 'Updated successfully!', ToastType.SUCCESS);
 
         this.authService.login(response.user, response.token);
         this.accountForm.reset();
@@ -74,7 +75,7 @@ export class EditAccountComponent {
       },
       error: (error) => {
         console.error('Error during updation:', error);
-        alert(error.error?.message || 'Updating failed. Please try again.');
+        this.toast.show(error.error?.message || 'Updating failed. Please try again.', ToastType.ERROR);
       }
     });
   }

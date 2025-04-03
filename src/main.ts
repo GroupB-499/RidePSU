@@ -1,6 +1,9 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
+import 'jquery';
+import 'bootstrap';
+import 'admin-lte';
 
 
 if ('serviceWorker' in navigator) {

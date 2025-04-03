@@ -1,0 +1,29 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">User Ratings</h2>
+  
+    <div class="row">
+      <div *ngFor="let rat of rating" class="col-md-6">
+        <div class="card shadow-lg mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ rat.username }}</h5><p class="text-warning">
+                <ng-container *ngFor="let star of [].constructor(rat.rating); let i = index">
+                  ⭐
+                </ng-container>
+              </p>
+            <p class="card-text">{{ rat.feedback }}</p>
+  
+            <!-- If no reply, show reply form -->
+            <form *ngIf="!rat.reply" [formGroup]="getReplyForm(rat.id)" (ngSubmit)="submitReply(rat.id)">
+              <input formControlName="replyText" class="form-control mb-2" placeholder="Write a reply..." />
+              <button type="submit" class="btn btn-primary btn-sm">Reply</button>
+            </form>
+  
+            <!-- If reply exists, show it -->
+            <div *ngIf="rat.reply" class="alert alert-info mt-3">
+              <strong>Admin Reply:</strong> {{ rat.reply }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

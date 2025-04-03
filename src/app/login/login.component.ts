@@ -47,7 +47,10 @@ private toast: ToastService,
           if(response.user.role == "user"){
             this.router.navigate(['/home']);
 
-          }else{
+          }else if(response.user.role == "admin"){
+            this.router.navigate(['/passenger']);
+          }
+          else{
             this.router.navigate(['/driverDash']);
           }
         } else {

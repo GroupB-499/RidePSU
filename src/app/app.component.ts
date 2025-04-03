@@ -11,6 +11,7 @@ import { MessagingService } from './messaging.service';
 export class AppComponent implements  OnInit {
   isLoggedIn = false;
   isPassenger = false;
+  isAdmin = false;
 
   constructor(private router: Router,private authService: AuthService, private messagingService: MessagingService) {}
 
@@ -25,6 +26,10 @@ export class AppComponent implements  OnInit {
     this.authService.isPassenger$.subscribe((status)=>{
       this.isPassenger = status;
     });
+    this.authService.isAdmin$.subscribe((status)=>{
+      this.isAdmin = status;
+    });
+
 
 
   }

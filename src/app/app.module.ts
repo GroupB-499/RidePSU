@@ -19,6 +19,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SchedulesComponent } from './schedules/schedules.component';
 import { SignupComponent } from './signup/signup.component';
 
+
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,6 +30,11 @@ import { MapsComponent } from './maps/maps.component';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { RatingsComponent } from './ratings/ratings.component';
+import { DriversComponent } from './admin/drivers/drivers.component';
+import { PassengersComponent } from './admin/passengers/passengers.component';
+import { AdminRatingsComponent } from './admin/ratings/ratings.component';
+import { AdminSchedulesComponent } from './admin/schedules/schedules.component';
+import { MyRatingsComponent } from './my-ratings/my-ratings.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +51,14 @@ import { RatingsComponent } from './ratings/ratings.component';
     BookingComponent,
     DriverDashComponent,
     MapsComponent,
+    AdminSchedulesComponent,
+    RatingsComponent,
     MyBookingsComponent,
     NotificationsComponent,
-    RatingsComponent
+    AdminRatingsComponent,
+    DriversComponent,
+    PassengersComponent,
+    MyRatingsComponent
   ],
   imports: [
     BrowserModule,

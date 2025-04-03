@@ -15,7 +15,7 @@ export class RatingsComponent implements OnInit {
   feedback = '';
   userId: string = '';
   username: string = '';
-  apiUrl = `${baseUrl}/submit-rating`;
+  apiUrl = `${baseUrl}/api/submit-rating`;
 
   constructor(
     private router: Router,

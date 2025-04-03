@@ -1,0 +1,38 @@
+<div class="container">
+
+    <div class="row">
+  
+      <div class="col mt-5">
+        <h2 class="text-primary"> Drivers List</h2>
+  
+        <table id="example2" class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+  
+            <tr *ngFor="let driver of drivers">
+              <td data-label="Name">{{driver.name}}</td>
+              <td data-label="Contact">{{driver.phone}}</td>
+              <td data-label="Description">{{driver.email}}</td>
+              <td data-label="Action">
+                <button class="btn btn-danger" (click)="deleteUser(driver.userId)">Delete</button>
+            </tr>
+  
+          </tbody>
+        </table>
+  
+  
+  
+        <div class="pagination-buttons">
+          <button class="page-btn" *ngFor="let page of pageNumbers" (click)="changePage(page)"
+            [class.active]="page == selectedPage">{{page}}</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -13,6 +13,11 @@ import { RatingsComponent } from './ratings/ratings.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { SignupComponent } from './signup/signup.component';
+import { PassengersComponent } from './admin/passengers/passengers.component';
+import { DriversComponent } from './admin/drivers/drivers.component';
+import { AdminSchedulesComponent } from './admin/schedules/schedules.component';
+import { AdminRatingsComponent } from './admin/ratings/ratings.component';
+import { MyRatingsComponent } from './my-ratings/my-ratings.component';
 
 
 const routes: Routes = [
@@ -32,6 +37,11 @@ const routes: Routes = [
   { path: 'myBookings', component: MyBookingsComponent },
   { path: 'driverDash', component: DriverDashComponent },
   { path: 'ratings', component: RatingsComponent },
+  { path: 'myRatings', component: MyRatingsComponent },
+  { path: 'passenger', component: PassengersComponent },
+  { path: 'driver', component: DriversComponent },
+  { path: 'admin-schedules', component: AdminSchedulesComponent },
+  { path: 'admin-ratings', component: AdminRatingsComponent },
 
 ];
 

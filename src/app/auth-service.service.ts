@@ -12,11 +12,18 @@ export class AuthService {
       return userInfo ? JSON.parse(userInfo).role !== 'driver' : false;
     })()
   );
+  private isAdmin = new BehaviorSubject<boolean>(
+    (() => {
+      const userInfo = localStorage.getItem('userInfo');
+      return userInfo ? JSON.parse(userInfo).role === 'admin' : false;
+    })()
+  );
   
   
   private userInfo: any = null; // Store user info
   isLoggedIn$ = this.loggedIn.asObservable(); // Observable for components to subscribe to
   isPassenger$ = this.isPassenger.asObservable(); // Observable for components to subscribe to
+  isAdmin$ = this.isAdmin.asObservable(); // Observable for components to subscribe to
 
   constructor() { }
 
@@ -47,6 +54,7 @@ export class AuthService {
       localStorage.setItem('authToken', token);
       this.loggedIn.next(true); // Update login status
       this.isPassenger.next(response.role == 'user'?true:false); // Update passenger status
+      this.isAdmin.next(response.role == 'admin'?true:false); // Update passenger status
     }
   }
 

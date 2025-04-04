@@ -2,7 +2,7 @@
 <main>
     <div class="account-container">
       <div class="account-details">
-        <h2>Account Information</h2>
+        <h2>{{title}}</h2>
         <form [formGroup]="accountForm" (ngSubmit)="shouldSendOtp()">
           <label for="name">Name</label>
           <input formControlName="name" type="text" id="name" placeholder="Enter your name" required />
@@ -13,14 +13,14 @@
            <label for="phone">Phone</label>
           <input formControlName="phone" type="text" id="phone" placeholder="Enter your phone number" required />
   
-          <label for="role">Role</label>
+          <!-- <label for="role">Role</label>
           <div class="radio-group">
             <input type="radio" id="user" value="user" formControlName="role" />
             <label for="user">Passenger</label>
   
             <input type="radio" id="driver" value="driver" formControlName="role" />
             <label for="driver">Driver</label>
-          </div>
+          </div> -->
   
           <button type="submit">Update</button>
         </form>

@@ -1,0 +1,70 @@
+<main>
+    <div class="account-container">
+      <div class="account-details">
+        <h2>{{ isEditMode ? 'Edit Schedule' : 'Add Schedule' }}</h2>
+  
+        <form (ngSubmit)="saveSchedule()" #scheduleForm="ngForm">
+          <!-- Pickup Dropdown -->
+          <label for="pickup">Pickup Location</label>
+          <select
+            [(ngModel)]="schedule.pickupLocations"
+            name="pickup"
+            id="pickup"
+            required
+            (change)="onPickupChange()"
+            class="styled-input"
+          >
+            <option value="" disabled selected>Select pickup location</option>
+            <option *ngFor="let loc of pickupLocations" [value]="loc.value">
+              {{ loc.label }}
+            </option>
+          </select>
+  
+          <!-- Dropoff Dropdown -->
+          <label for="dropoff">Dropoff Location</label>
+          <select
+            [(ngModel)]="schedule.dropoffLocations"
+            name="dropoff"
+            id="dropoff"
+            required
+            (change)="onDropoffChange()"
+            class="styled-input"
+          >
+            <option value="" disabled selected>Select dropoff location</option>
+            <option *ngFor="let loc of filteredDropoff" [value]="loc.value">
+              {{ loc.label }}
+            </option>
+          </select>
+  
+          <!-- Time Dropdown -->
+          <label for="time">Time</label>
+          <select
+            [(ngModel)]="schedule.time"
+            name="time"
+            id="time"
+            required
+            class="styled-input"
+          >
+            <option value="" disabled selected>Select time</option>
+            <option *ngFor="let time of availableTimes" [value]="time">{{ time }}</option>
+          </select>
+  
+          <!-- Transport Type (Read-only) -->
+          <label for="transport">Transport Type</label>
+          <input
+            [(ngModel)]="schedule.transportType"
+            name="transport"
+            type="text"
+            id="transport"
+            class="styled-input"
+            placeholder="Auto-selected"
+            readonly
+            required
+          />
+  
+          <button type="submit">{{ isEditMode ? 'Update Schedule' : 'Add Schedule' }}</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  

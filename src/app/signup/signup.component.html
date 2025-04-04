@@ -6,7 +6,7 @@
       <div class="account-details">
       <img src="./../assets/ridepsu.png" alt="Logo" class="logo" style="height: 100px;">
 
-        <h2>Sign Up</h2>
+        <h2>{{title}}</h2>
         <form [formGroup]="accountForm" (ngSubmit)="openOtpModal()">
           <label for="name">Name</label>
           <input formControlName="name" type="text" id="name" placeholder="Enter your name" required />
@@ -20,16 +20,7 @@
           <label for="phone">Phone</label>
           <input formControlName="phone" type="text" id="phone" placeholder="Enter your phone number" required />
   
-          <label for="role">Role</label>
-          <div class="radio-group">
-            <input type="radio" id="user" value="user" formControlName="role" />
-            <label for="user">Passenger</label>
-  
-            <input type="radio" id="driver" value="driver" formControlName="role" />
-            <label for="driver">Driver</label>
-          </div>
-  
-          <button type="submit">Sign Up</button>
+          <button type="submit">{{title}}</button>
         </form>
       </div>
     </div>

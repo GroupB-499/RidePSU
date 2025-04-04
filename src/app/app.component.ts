@@ -3,11 +3,14 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth-service.service';
 import { MessagingService } from './messaging.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements  OnInit {
   isLoggedIn = false;
   isPassenger = false;
@@ -38,6 +41,11 @@ export class AppComponent implements  OnInit {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  toggleSidebar() {
+    // Add or remove the sidebar-collapse class on body
+    $('body').toggleClass('sidebar-collapse');
   }
 
   toggleDropdown() {

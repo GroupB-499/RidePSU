@@ -64,25 +64,22 @@ schedulesList: any= [];
     this.schedules = [];
     this.schedules = this.schedulesList.slice(this.pageIndex, endIndex);
   }
-  deleteUser(userId: string) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.http.delete(`${baseUrl}/api/delete-user/${userId}`).subscribe({
+  deleteSchedule(scheduleId: string) {
+    if (confirm('Are you sure you want to delete this schedule?')) {
+      this.http.delete(`${baseUrl}/api/delete-schedule/${scheduleId}`).subscribe({
         next: () => {
-          // Update the passengers list after deletion
-          this.schedulesList = this.schedulesList.filter((user: any) => user.id !== userId);
-          this.schedules = this.schedulesList.slice(this.pageIndex, this.schedulesPerPage);
-          
+          this.schedulesList = this.schedulesList.filter((schedule:  any) => schedule.id !== scheduleId);
           this.slicedProducts();
-          // Show success message
-          this.toast.show('User deleted successfully!', ToastType.SUCCESS);
+          this.toast.show('Schedule deleted successfully!', ToastType.SUCCESS);
         },
         error: (error) => {
-          console.error('Error deleting user:', error);
-          this.toast.show('Failed to delete user!', ToastType.ERROR);
-        },
+          console.error('Error deleting schedule:', error);
+          this.toast.show('Failed to delete schedule.', ToastType.ERROR);
+        }
       });
     }
   }
+  
 
   upCard(card:any){
     // this.router.navigate(['editCard'],{queryParams:card});

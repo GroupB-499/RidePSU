@@ -59,6 +59,22 @@ export class DriversComponent {
     this.drivers = [];
     this.drivers = this.driversList.slice(this.pageIndex, endIndex);
   }
+
+  toggleUserStatus(userId: string, currentStatus: boolean) {
+    const newStatus = !currentStatus;
+  
+    this.http.patch(`${baseUrl}/api/update-user-status/${userId}`, { enabled: newStatus }).subscribe({
+      next: () => {
+        this.toast.show(`User ${newStatus ? 'activated' : 'deactivated'} successfully!`, ToastType.SUCCESS);
+        this.getAllDrivers();  // refresh list
+      },
+      error: (error) => {
+        console.error('Error updating user status:', error);
+        this.toast.show('Failed to update user status!', ToastType.ERROR);
+      }
+    });
+  }
+  
   deleteUser(userId: string) {
     if (confirm('Are you sure you want to delete this user?')) {
       this.http.delete(`${baseUrl}/api/delete-user/${userId}`).subscribe({

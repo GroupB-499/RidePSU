@@ -22,6 +22,12 @@
             <td data-label="Description">{{passenger.email}}</td>
             <td data-label="Action">
               <button class="btn btn-danger" (click)="deleteUser(passenger.userId)">Delete</button>
+              <button class="btn m-1" 
+                        [ngClass]="passenger.enabled ? 'btn-warning' : 'btn-success'" 
+                        (click)="toggleUserStatus(passenger.userId, passenger.enabled)">
+                  {{ passenger.enabled ? 'Deactivate' : 'Activate' }}
+                </button>
+            </td>
           </tr>
 
         </tbody>

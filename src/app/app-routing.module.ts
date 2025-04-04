@@ -18,6 +18,7 @@ import { DriversComponent } from './admin/drivers/drivers.component';
 import { AdminSchedulesComponent } from './admin/schedules/schedules.component';
 import { AdminRatingsComponent } from './admin/ratings/ratings.component';
 import { MyRatingsComponent } from './my-ratings/my-ratings.component';
+import { ScheduleFormComponent } from './admin/schedule-form/schedule-form.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'driver', component: DriversComponent },
   { path: 'admin-schedules', component: AdminSchedulesComponent },
   { path: 'admin-ratings', component: AdminRatingsComponent },
+  { path: 'schedule-form', component: ScheduleFormComponent },
 
 ];
 

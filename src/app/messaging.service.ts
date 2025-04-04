@@ -48,7 +48,9 @@ export class MessagingService {
       const body = message.notification?.body || '';
     
       if(title === "Ride Ended"){
+        if(this.authService.getUserInfo().role === "user"){
         this.router.navigate(['/ratings']);
+        }
       }
 
       // Show Snackbar popup

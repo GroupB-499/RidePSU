@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
 import { ToastService, ToastType } from '../toast.service';
@@ -15,14 +15,35 @@ export class EditAccountComponent {
 
   accountForm!: FormGroup;
   showOtpModal = false;
+  title = 'Account Information';
 
   private initUserData: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService,private toast: ToastService,
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private authService: AuthService, private toast: ToastService,
     private router: Router,) { }
 
   ngOnInit(): void {
-    this.initUserData = this.authService.getUserInfo();
+    this.route.queryParams.subscribe(params => {
+      const userId = params['userId'];
+      const name = params['name'];
+      const phone = params['phone'];
+      const email = params['email'];
+      const role = params['role'];
+      this.initUserData = {
+        userId: userId,
+        name: name,
+        phone: phone,
+        email: email,
+        role: role
+      };
+
+      if (role == "driver") {
+        this.title = 'Edit Driver';
+      } else {
+        this.initUserData = this.authService.getUserInfo();
+      }
+      console.log('Role:', this.accountForm.value.role);
+    });
     this.accountForm = this.fb.group({
       userId: [this.initUserData.userId],
       name: [this.initUserData.name, [Validators.required]],
@@ -32,7 +53,7 @@ export class EditAccountComponent {
     });
   }
 
-  
+
   handleOtpVerification(isVerified: boolean) {
     this.showOtpModal = false; // Close modal
     if (isVerified) {
@@ -42,10 +63,10 @@ export class EditAccountComponent {
     }
   }
 
-  shouldSendOtp(){
-    if(this.initUserData.email !== this.accountForm.value.email){
+  shouldSendOtp() {
+    if (this.initUserData.email !== this.accountForm.value.email) {
       this.showOtpModal = true;
-    }else{
+    } else {
       this.update();
     }
   }
@@ -65,11 +86,11 @@ export class EditAccountComponent {
 
         this.authService.login(response.user, response.token);
         this.accountForm.reset();
-        if(this.authService.getUserInfo().role == 'user'){
-        this.router.navigate(['/home']);
+        if (this.authService.getUserInfo().role == 'user') {
+          this.router.navigate(['/home']);
 
-        }else{
-        this.router.navigate(['/driverDash']);
+        } else {
+          this.router.navigate(['/driverDash']);
 
         }
       },

@@ -35,6 +35,7 @@ import { PassengersComponent } from './admin/passengers/passengers.component';
 import { AdminRatingsComponent } from './admin/ratings/ratings.component';
 import { AdminSchedulesComponent } from './admin/schedules/schedules.component';
 import { MyRatingsComponent } from './my-ratings/my-ratings.component';
+import { ScheduleFormComponent } from './admin/schedule-form/schedule-form.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { MyRatingsComponent } from './my-ratings/my-ratings.component';
     AdminRatingsComponent,
     DriversComponent,
     PassengersComponent,
-    MyRatingsComponent
+    MyRatingsComponent,
+    ScheduleFormComponent,
   ],
   imports: [
     BrowserModule,

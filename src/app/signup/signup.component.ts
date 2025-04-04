@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
 import { ToastService, ToastType } from '../toast.service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-signup',
@@ -15,11 +17,12 @@ export class SignupComponent {
 
   showOtpModal = false;
   email = '';
+  title = 'Signup';
 
   accountForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService,
-    private router: Router,private toast: ToastService) { }
+    private router: Router, private toast: ToastService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.accountForm = this.fb.group({
@@ -27,8 +30,20 @@ export class SignupComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
-      role: ['', [Validators.required]]
+      role: ['user', [Validators.required]]
     });
+    this.route.queryParams.subscribe(params => {
+      const queryRole = params['role'];
+      this.accountForm.patchValue({
+        role: queryRole && queryRole.trim() !== '' ? queryRole : 'user'
+      });
+      if(this.accountForm.value.role == "driver"){
+        this.title = 'Add Driver';
+      }
+      console.log('Role:', this.accountForm.value.role);
+    });
+    console.log('Role:', this.accountForm.value.role);
+
   }
 
   async openOtpModal() {
@@ -37,11 +52,11 @@ export class SignupComponent {
       return;
     }
 
-    
-      if(await this.checkEmailExists()){
-        this.toast.show('Email already exists, please try with another email.', ToastType.ERROR);
-        return;
-      }
+
+    if (await this.checkEmailExists()) {
+      this.toast.show('Email already exists, please try with another email.', ToastType.ERROR);
+      return;
+    }
 
     const password = this.accountForm.get('password')?.value;
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -51,19 +66,21 @@ export class SignupComponent {
       return;
     }
 
-    
+
     this.email = this.accountForm.value.email;
 
     this.showOtpModal = true;
   }
 
   async checkEmailExists(): Promise<boolean> {
-    
+
     const email = this.accountForm.get('email')?.value;
     try {
-      const response = await this.http.get<{ exists: boolean }>(`${baseUrl}/api/check-email/${email}`,{headers: new HttpHeaders({
-                            'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
-                          })}).toPromise();
+      const response = await this.http.get<{ exists: boolean }>(`${baseUrl}/api/check-email/${email}`, {
+        headers: new HttpHeaders({
+          'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+        })
+      }).toPromise();
       return response?.exists ?? false;
     } catch (error) {
       console.error('Error checking email:', error);
@@ -87,7 +104,7 @@ export class SignupComponent {
       return;
     }
 
-    
+
 
     const formData = this.accountForm.value;
 

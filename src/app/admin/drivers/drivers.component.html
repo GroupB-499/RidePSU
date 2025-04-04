@@ -3,8 +3,14 @@
     <div class="row">
   
       <div class="col mt-5">
-        <h2 class="text-primary"> Drivers List</h2>
-  
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+          <h2 class="text-primary mb-0">Drivers List</h2>
+          <button class="btn btn-success" [routerLink]="['/signup']" 
+          [queryParams]="{ role: 'driver' }">
+            <i class="fas fa-plus-circle"></i> Add Driver
+          </button>
+        </div>
+        
         <table id="example2" class="table table-hover">
           <thead>
             <tr>
@@ -21,7 +27,18 @@
               <td data-label="Contact">{{driver.phone}}</td>
               <td data-label="Description">{{driver.email}}</td>
               <td data-label="Action">
-                <button class="btn btn-danger" (click)="deleteUser(driver.userId)">Delete</button>
+                <button class="btn btn-danger m-1" (click)="deleteUser(driver.userId)">Delete</button>
+                <button class="btn btn-primary m-1" [routerLink]="['/edit-user']" 
+                  [queryParams]="{ role: 'driver', id: driver.userId, name: driver.name, email: driver.email, phone: driver.phone }">
+                  Edit
+                </button>
+                <button class="btn m-1" 
+                        [ngClass]="driver.enabled ? 'btn-warning' : 'btn-success'" 
+                        (click)="toggleUserStatus(driver.userId, driver.enabled)">
+                  {{ driver.enabled ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+
             </tr>
   
           </tbody>

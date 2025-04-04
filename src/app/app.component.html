@@ -11,86 +11,92 @@
 
 <body class="hold-transition sidebar-mini layout-fixed" id="body-pd">
   <div *ngIf="isLoggedIn">
-    
-   <div *ngIf="!isAdmin">
-    <header>
-      <div class="top-bar">
-        <img src="./../assets/ridepsu.png" alt="Logo" class="logo">
-    
-        <!-- Navigation Bar -->
-        <nav [class.open]="menuOpen">
+
+    <div *ngIf="!isAdmin">
+      <header>
+        <div class="top-bar">
+          <img src="./../assets/ridepsu.png" alt="Logo" class="logo">
+
+          <!-- Navigation Bar -->
+          <nav [class.open]="menuOpen">
+            <ul>
+              <li><a routerLink="{{isPassenger ? '/home':'/driverDash'}}">Home</a></li>
+              <li><a routerLink="/map">Live Tracking</a></li>
+
+              <div *ngIf="isPassenger">
+                <li><a routerLink="/schedules">Schedules</a></li>
+              </div>
+
+              <!-- Account Dropdown -->
+              <li class="dropdown">
+                <a class="user-profile" (click)="toggleDropdown()">
+                  Account
+                  <mat-icon class="dropdown-arrow" style="height: 18px;">
+                    {{ showDropdown ? 'expand_less' : 'expand_more' }}
+                  </mat-icon>
+                </a>
+                <ul class="dropdown-menu" *ngIf="showDropdown">
+                  <div *ngIf="isPassenger">
+                    <li (click)="toggleDropdown()" routerLink="/myBookings"><a>View Booking</a></li>
+                  </div>
+                  <li (click)="toggleDropdown()" routerLink="/edit-user"><a>Edit Account</a></li>
+
+              <div *ngIf="isPassenger">
+                <li><a routerLink="/myRatings">My Ratings</a></li>
+              </div>
+                </ul>
+              </li>
+
+              <li><a routerLink="/notifications">Notifications</a></li>
+              <li (click)="logout()">
+                <a class="user-profile"><mat-icon>exit_to_app</mat-icon> Log Out</a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Hamburger Menu (Moved to the Right) -->
+          <button class="hamburger" (click)="toggleMenu()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+
+        <!-- Sidebar Navigation (Overlay) -->
+        <div class="sidebar-overlay" *ngIf="menuOpen" (click)="toggleMenu()"></div>
+        <div class="sidebar" [class.open]="menuOpen">
+          <button class="close-btn" (click)="toggleMenu()">
+            <mat-icon>close</mat-icon>
+          </button>
           <ul>
-            <li><a routerLink="{{isPassenger ? '/home':'/driverDash'}}">Home</a></li>
-            <li><a routerLink="/map">Live Tracking</a></li>
-    
-            <div *ngIf="isPassenger">
-              <li><a routerLink="/schedules">Schedules</a></li>
-            </div>
-            <div *ngIf="isPassenger">
-              <li><a routerLink="/myRatings">My Ratings</a></li>
-            </div>
-    
-            <!-- Account Dropdown -->
-            <li class="dropdown">
-              <a class="user-profile" (click)="toggleDropdown()">
-                Account
-                <mat-icon class="dropdown-arrow">
-                  {{ showDropdown ? 'expand_less' : 'expand_more' }}
-                </mat-icon>
-              </a>
-              <ul class="dropdown-menu" *ngIf="showDropdown">
-                <div *ngIf="isPassenger">
-                  <li (click)="toggleDropdown()" routerLink="/myBookings"><a>View Booking</a></li>
-                </div>
-                <li (click)="toggleDropdown()" routerLink="/edit-user"><a>Edit Account</a></li>
-              </ul>
-            </li>
-    
-            <li><a routerLink="/notifications">Notifications</a></li>
+            <li><a routerLink="{{isPassenger ? '/home':'/driverDash'}}" (click)="toggleMenu()">Home</a></li>
+            <li><a routerLink="/map" (click)="toggleMenu()">Live Tracking</a></li>
+            <li *ngIf="isPassenger"><a routerLink="/schedules" (click)="toggleMenu()">Schedules</a></li>
+            <li><a routerLink="/notifications" (click)="toggleMenu()">Notifications</a></li>
+            <li><a routerLink="/edit-user" (click)="toggleMenu()">Edit Account</a></li>
+            <li *ngIf="isPassenger"><a routerLink="/myBookings" (click)="toggleMenu()">View Booking</a></li>
             <li (click)="logout()">
               <a class="user-profile"><mat-icon>exit_to_app</mat-icon> Log Out</a>
             </li>
           </ul>
-        </nav>
-    
-        <!-- Hamburger Menu (Moved to the Right) -->
-        <button class="hamburger" (click)="toggleMenu()">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </div>
-    
-      <!-- Sidebar Navigation (Overlay) -->
-      <div class="sidebar-overlay" *ngIf="menuOpen" (click)="toggleMenu()"></div>
-      <div class="sidebar" [class.open]="menuOpen">
-        <button class="close-btn" (click)="toggleMenu()">
-          <mat-icon>close</mat-icon>
-        </button>
-        <ul>
-          <li><a routerLink="{{isPassenger ? '/home':'/driverDash'}}" (click)="toggleMenu()">Home</a></li>
-          <li><a routerLink="/map" (click)="toggleMenu()">Live Tracking</a></li>
-          <li *ngIf="isPassenger"><a routerLink="/schedules" (click)="toggleMenu()">Schedules</a></li>
-          <li><a routerLink="/notifications" (click)="toggleMenu()">Notifications</a></li>
-          <li><a routerLink="/edit-user" (click)="toggleMenu()">Edit Account</a></li>
-          <li *ngIf="isPassenger"><a routerLink="/myBookings" (click)="toggleMenu()">View Booking</a></li>
-          <li (click)="logout()">
-            <a class="user-profile"><mat-icon>exit_to_app</mat-icon> Log Out</a>
-          </li>
-        </ul>
-      </div>
-    </header>
-   </div>
+        </div>
+      </header>
+    </div>
     <div *ngIf="isAdmin">
       <header class="header" id="header" [ngClass]="{ hide: !isLoggedIn }">
-        <div class="header_toggle">
-          <i class="bx bx-menu" id="header-toggle"></i>
-        </div>
+        <a href="#" class="nav-link" (click)="toggleSidebar()">
+          <i class="bx bx-menu" style="font-size: x-large" id="header-toggle"></i>
+        </a>
+
       </header>
       <div class="l-navbar" id="nav-bar" [ngClass]="{ hide: !isLoggedIn }">
         <nav class="nav">
           <div>
             <a class="nav_logo">
-              <i class="bx bx-layer nav_logo-icon"></i>
-              <span class="nav_logo-name">Ride PSU Dashboard</span>
+          <img src="./../assets/ridepsu.png" style="
+          width: 30px;
+          height: 30px;
+          display: block;" alt="Logo" class="logo">
+
+              <span class="nav_logo-name">Dashboard</span>
             </a>
             <div class="nav_list">
               <a routerLink="/passenger" class="nav_link active">

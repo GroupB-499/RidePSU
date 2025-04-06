@@ -36,6 +36,11 @@ import { AdminRatingsComponent } from './admin/ratings/ratings.component';
 import { AdminSchedulesComponent } from './admin/schedules/schedules.component';
 import { MyRatingsComponent } from './my-ratings/my-ratings.component';
 import { ScheduleFormComponent } from './admin/schedule-form/schedule-form.component';
+import { AssignDriverModalComponent } from './assign-driver-modal/assign-driver-modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComplaintsComponent } from './complaints/complaints.component';
+import { MyComplaintsComponent } from './my-complaints/my-complaints.component';
+import { AdminComplaintsComponent } from './admin/admin-complaints/admin-complaints.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +66,10 @@ import { ScheduleFormComponent } from './admin/schedule-form/schedule-form.compo
     PassengersComponent,
     MyRatingsComponent,
     ScheduleFormComponent,
+    AssignDriverModalComponent,
+    ComplaintsComponent,
+    MyComplaintsComponent,
+    AdminComplaintsComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +87,7 @@ import { ScheduleFormComponent } from './admin/schedule-form/schedule-form.compo
     
     AngularFireModule.initializeApp({"projectId":"ridepsu-8b9fc","appId":"1:996061760535:web:922b8e96b32f8dcc8a6052","storageBucket":"ridepsu-8b9fc.firebasestorage.app","apiKey":"AIzaSyDNfEo3bZ-x8MSh4btnjbgzLONryzrzHpA","authDomain":"ridepsu-8b9fc.firebaseapp.com","messagingSenderId":"996061760535","measurementId":"G-RM2960T6RG"}),
     provideFirebaseApp(() => initializeApp({"projectId":"ridepsu-8b9fc","appId":"1:996061760535:web:922b8e96b32f8dcc8a6052","storageBucket":"ridepsu-8b9fc.firebasestorage.app","apiKey":"AIzaSyDNfEo3bZ-x8MSh4btnjbgzLONryzrzHpA","authDomain":"ridepsu-8b9fc.firebaseapp.com","messagingSenderId":"996061760535","measurementId":"G-RM2960T6RG"})),
+    NgbModule,
     
   ],
   providers: [provideAnimations(), 

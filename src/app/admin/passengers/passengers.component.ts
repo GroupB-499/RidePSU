@@ -3,6 +3,7 @@ import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { baseUrl } from 'src/app/configs';
 import { ToastService, ToastType } from 'src/app/toast.service';
+import { WebSocketService } from 'src/app/websocket.service';
 
 @Component({
   selector: 'app-passengers',
@@ -20,13 +21,52 @@ export class PassengersComponent {
 
   constructor(private http: HttpClient,
     private toast: ToastService,
+    private wsService: WebSocketService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.getAllPassengers();
     this.pageIndex = (this.selectedPage - 1)*this.passengersPerPage;
+
+    this.wsService.connect();
   }
   
+  ngAfterViewInit() {
+  const toggle = document.getElementById('header-toggle');
+  const nav = document.getElementById('nav-bar');
+  const bodypd = document.getElementById('body-pd');
+  const headerpd = document.getElementById('header');
+
+  if (toggle && nav && bodypd && headerpd) {
+    // Check if event listener is already added
+    if (!toggle.hasAttribute('listener-attached')) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('show');
+        toggle.classList.toggle('bx-x');
+        bodypd.classList.toggle('body-pd');
+        headerpd.classList.toggle('body-pd');
+      });
+
+      // Set a custom attribute to mark listener is attached
+      toggle.setAttribute('listener-attached', 'true');
+    }
+  }
+
+  const linkColor = document.querySelectorAll('.nav_link');
+
+  linkColor.forEach(l => {
+    // Same logic here: avoid duplicate event listeners
+    if (!l.hasAttribute('listener-attached')) {
+      l.addEventListener('click', function (this: HTMLElement) {
+        linkColor.forEach(el => el.classList.remove('active'));
+        this.classList.add('active');
+      });
+
+      l.setAttribute('listener-attached', 'true');
+    }
+  });
+}
+
   getAllPassengers() {
     this.passengersList = [];
 

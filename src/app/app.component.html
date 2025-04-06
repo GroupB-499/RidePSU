@@ -42,14 +42,17 @@
                   <li (click)="toggleDropdown()" routerLink="/edit-user"><a>Edit Account</a></li>
 
               <div *ngIf="isPassenger">
-                <li><a routerLink="/myRatings">My Ratings</a></li>
+                <li (click)="toggleDropdown()" routerLink="/myRatings"><a>My Ratings</a></li>
+              </div>
+              <div *ngIf="!isPassenger">
+                <li (click)="toggleDropdown()" routerLink="/myComplaints"><a>My Complaints</a></li>
               </div>
                 </ul>
               </li>
 
               <li><a routerLink="/notifications">Notifications</a></li>
               <li (click)="logout()">
-                <a class="user-profile"><mat-icon>exit_to_app</mat-icon> Log Out</a>
+                <a class="user-profile"><mat-icon style="height: 18px; font-size: 20px;">exit_to_app</mat-icon> Log Out</a>
               </li>
             </ul>
           </nav>
@@ -72,6 +75,8 @@
             <li *ngIf="isPassenger"><a routerLink="/schedules" (click)="toggleMenu()">Schedules</a></li>
             <li><a routerLink="/notifications" (click)="toggleMenu()">Notifications</a></li>
             <li><a routerLink="/edit-user" (click)="toggleMenu()">Edit Account</a></li>
+            <li *ngIf="isPassenger"><a routerLink="/myRatings" (click)="toggleMenu()">My Ratings</a></li>
+            <li *ngIf="!isPassenger"><a routerLink="/myComplaints" (click)="toggleMenu()">My Complaints</a></li>
             <li *ngIf="isPassenger"><a routerLink="/myBookings" (click)="toggleMenu()">View Booking</a></li>
             <li (click)="logout()">
               <a class="user-profile"><mat-icon>exit_to_app</mat-icon> Log Out</a>
@@ -82,39 +87,42 @@
     </div>
     <div *ngIf="isAdmin">
       <header class="header" id="header" [ngClass]="{ hide: !isLoggedIn }">
-        <a href="#" class="nav-link" (click)="toggleSidebar()">
-          <i class="bx bx-menu" style="font-size: x-large" id="header-toggle"></i>
+        <a class="nav-link" >
+          <i class="bx bx-menu" style="font-size: x-large;color: #000;" id="header-toggle"></i>
         </a>
 
       </header>
       <div class="l-navbar" id="nav-bar" [ngClass]="{ hide: !isLoggedIn }">
         <nav class="nav">
           <div>
-            <a class="nav_logo">
+            <a class="nav_logo" style="text-decoration: none;">
           <img src="./../assets/ridepsu.png" style="
           width: 30px;
           height: 30px;
           display: block;" alt="Logo" class="logo">
 
-              <span class="nav_logo-name">Dashboard</span>
+              <span class="nav_logo-name" >Dashboard</span>
             </a>
             <div class="nav_list">
-              <a routerLink="/passenger" class="nav_link active">
+              <a routerLink="/passenger" class="nav_link active" style="text-decoration: none;">
                 <i class="bx bx-user nav_icon"></i>
                 <span class="nav_name">Passengers</span>
               </a>
-              <a routerLink="/driver" class="nav_link">
+              <a routerLink="/driver" class="nav_link" style="text-decoration: none;">
                 <i class="bx bx-bus nav_icon"></i>
                 <span class="nav_name">Drivers</span>
               </a>
-              <a routerLink="/admin-schedules" class="nav_link">
+              <a routerLink="/admin-schedules" class="nav_link" style="text-decoration: none;">
                 <i class="bx bx-list-ul nav_icon"></i>
                 <span class="nav_name">Schedules</span>
               </a>
-              <a routerLink="/admin-ratings" class="nav_link">
+              <a routerLink="/admin-ratings" class="nav_link" style="text-decoration: none;">
                 <i class="bx bx-star nav_icon"></i>
                 <span class="nav_name">Ratings</span> </a>
-              <a (click)="logout()" class="nav_link">
+                <a routerLink="/admin-complaints" class="nav_link" style="text-decoration: none;">
+                  <i class="bx bx-info-circle nav_icon"></i>
+                  <span class="nav_name">Complaints</span> </a>
+              <a (click)="logout()" class="nav_link" style="text-decoration: none;">
                 <i class="bx bx-log-out nav_icon"></i>
                 <span class="nav_name">SignOut</span>
               </a>

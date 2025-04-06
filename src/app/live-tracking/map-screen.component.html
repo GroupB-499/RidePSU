@@ -4,8 +4,14 @@
 
 <main>
     <section class="live-tracking">
+        
         <h2>Live Tracking</h2>
-        <p><strong>ETA for next booking is: </strong> {{ eta }}</p>
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+            <p><strong>ETA for next booking is: </strong> {{ eta }}</p>
+
+            <button *ngIf="isDriver" routerLink="/complaints"  class="styled-button stop">Register a complaint</button>
+
+        </div>
         <br>
         <div class="tracking-container">
             <div class="booking-details" *ngIf="booking">

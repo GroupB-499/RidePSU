@@ -50,6 +50,148 @@ header .top-bar .logo {
 nav {
     display: flex;
 }
+.container {
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  h2.text-primary {
+    color: #1e88e5;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .table thead {
+    background-color: #f4f6f8;
+  }
+  
+  .table th,
+  .table td {
+    text-align: left;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .btn {
+    padding: 0.4rem 0.9rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    color: #fff;
+  }
+  
+  .btn-danger {
+    background-color: #e53935;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c62828;
+  }
+  
+  .btn-warning {
+    background-color: #fbc02d;
+    color: #333;
+  }
+  
+  .btn-warning:hover {
+    background-color: #f9a825;
+  }
+  
+  .btn-success {
+    background-color: #43a047;
+  }
+  
+  .btn-success:hover {
+    background-color: #388e3c;
+  }
+  
+  .m-1 {
+    margin-left: 0.5rem;
+  }
+  
+  .pagination-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .page-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #1e88e5;
+    background: transparent;
+    color: #1e88e5;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .page-btn:hover {
+    background-color: #1e88e5;
+    color: white;
+  }
+  
+  .page-btn.active {
+    background-color: #1e88e5;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Responsive tweak */
+  @media (max-width: 768px) {
+    .table thead {
+      display: none;
+    }
+  
+    .table tr {
+      display: block;
+      margin-bottom: 1rem;
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+  
+    .table td {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+  
+    .table td:last-child {
+      border-bottom: none;
+    }
+  
+    .table td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #555;
+    }
+  
+    .table td[data-label="Action"] {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  
 
 nav ul {
     list-style: none;

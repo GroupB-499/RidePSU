@@ -19,6 +19,9 @@ import { AdminSchedulesComponent } from './admin/schedules/schedules.component';
 import { AdminRatingsComponent } from './admin/ratings/ratings.component';
 import { MyRatingsComponent } from './my-ratings/my-ratings.component';
 import { ScheduleFormComponent } from './admin/schedule-form/schedule-form.component';
+import { AdminComplaintsComponent } from './admin/admin-complaints/admin-complaints.component';
+import { MyComplaintsComponent } from './my-complaints/my-complaints.component';
+import { ComplaintsComponent } from './complaints/complaints.component';
 
 
 const routes: Routes = [
@@ -38,11 +41,14 @@ const routes: Routes = [
   { path: 'myBookings', component: MyBookingsComponent },
   { path: 'driverDash', component: DriverDashComponent },
   { path: 'ratings', component: RatingsComponent },
+  { path: 'complaints', component: ComplaintsComponent },
   { path: 'myRatings', component: MyRatingsComponent },
+  { path: 'myComplaints', component: MyComplaintsComponent },
   { path: 'passenger', component: PassengersComponent },
   { path: 'driver', component: DriversComponent },
   { path: 'admin-schedules', component: AdminSchedulesComponent },
   { path: 'admin-ratings', component: AdminRatingsComponent },
+  { path: 'admin-complaints', component: AdminComplaintsComponent },
   { path: 'schedule-form', component: ScheduleFormComponent },
 
 ];

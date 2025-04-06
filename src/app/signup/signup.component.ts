@@ -113,14 +113,19 @@ export class SignupComponent {
       next: (response: any) => {
         this.toast.show(response.message || 'Signup successful!', ToastType.SUCCESS);
 
-        this.authService.login(response.user, response.token);
-        this.accountForm.reset();
-        if (response.user.role == "user") {
-          this.router.navigate(['/home']);
-
-        } else {
-          this.router.navigate(['/driverDash']);
+        if(this.authService.getUserInfo().role != "admin"){
+          this.authService.login(response.user, response.token);
+          this.accountForm.reset();
+          if (response.user.role == "user") {
+            this.router.navigate(['/home']);
+  
+          } else {
+            this.router.navigate(['/driverDash']);
+          }
+        }else{
+          this.router.navigate(['/driver']);
         }
+        
       },
       error: (error) => {
         console.error('Error during signup:', error.error['error']);

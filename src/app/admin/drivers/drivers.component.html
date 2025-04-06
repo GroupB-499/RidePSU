@@ -28,6 +28,9 @@
               <td data-label="Description">{{driver.email}}</td>
               <td data-label="Action">
                 <button class="btn btn-danger m-1" (click)="deleteUser(driver.userId)">Delete</button>
+                <button class="btn btn-success m-1" (click)="openTimeModal(driver.userId)">Assign Rides</button>
+                <br>
+
                 <button class="btn btn-primary m-1" [routerLink]="['/edit-user']" 
                   [queryParams]="{ role: 'driver', id: driver.userId, name: driver.name, email: driver.email, phone: driver.phone }">
                   Edit
@@ -37,6 +40,7 @@
                         (click)="toggleUserStatus(driver.userId, driver.enabled)">
                   {{ driver.enabled ? 'Deactivate' : 'Activate' }}
                 </button>
+
               </td>
 
             </tr>

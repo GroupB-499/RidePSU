@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AssignDriverModalComponent } from 'src/app/assign-driver-modal/assign-driver-modal.component';
 import { baseUrl } from 'src/app/configs';
 import { ToastService, ToastType } from 'src/app/toast.service';
 
@@ -17,14 +19,48 @@ export class DriversComponent {
   public selectedPage= 1;
   public pageIndex = 0;
   searchText: any;
+  
 
   constructor(private http: HttpClient,
     private toast: ToastService,
+    private modalService: NgbModal,
     private router: Router) { }
 
   ngOnInit(): void {
     this.getAllDrivers();
     this.pageIndex = (this.selectedPage - 1)*this.driversPerPage;
+  }
+
+  openTimeModal(driverId: string) {
+    const modalRef = this.modalService.open(AssignDriverModalComponent, { centered: true });
+    modalRef.result.then(
+      result => {
+        console.log('Modal data:', result); // { from: "08:00", to: "08:30", transport: "Shuttle Bus" }
+        const data = {
+          driverId: driverId,
+          startTimeFrom: result.from,
+          startTimeTo: result.to,
+          transportType: result.transport
+        };
+        this.http.post(`${baseUrl}/api/add-driver`, data, {
+          headers: new HttpHeaders({
+            'ngrok-skip-browser-warning': 'true'  // ✅ Bypasses Ngrok security page
+          })
+        }).subscribe({
+          next: (response) => {
+            console.log('Driver assigned successfully:', response);
+            this.toast.show('Driver assigned successfully!', ToastType.SUCCESS);
+          },
+          error: (error) => {
+            console.error('Error assigning driver:', error);
+            this.toast.show('Failed to assign driver. Please try again later.', ToastType.ERROR);
+          }
+        });
+      },
+      reason => {
+        console.log('Modal dismissed');
+      }
+    );
   }
   
   getAllDrivers() {

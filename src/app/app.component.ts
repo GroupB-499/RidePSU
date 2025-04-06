@@ -32,20 +32,13 @@ export class AppComponent implements  OnInit {
     this.authService.isAdmin$.subscribe((status)=>{
       this.isAdmin = status;
     });
-
-
-
   }
+  
   menuOpen = false;
   showDropdown = false;
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
-  }
-
-  toggleSidebar() {
-    // Add or remove the sidebar-collapse class on body
-    $('body').toggleClass('sidebar-collapse');
   }
 
   toggleDropdown() {

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
+import { ToastService, ToastType } from '../toast.service';
 
 @Component({
   selector: 'app-ratings',
@@ -20,8 +21,9 @@ export class RatingsComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private toast: ToastService,
+  ) { }
 
   ngOnInit() {
     this.userId = this.authService.getUserInfo().userId;
@@ -48,10 +50,14 @@ export class RatingsComponent implements OnInit {
     this.http.post(this.apiUrl, ratingData).subscribe(
       () => {
         console.log('Rating submitted successfully');
+        this.toast.show('Rating submitted successfully', ToastType.SUCCESS);
+
         this.router.navigate(['/home']);
       },
       error => {
         console.error('Error submitting rating:', error);
+        this.toast.show('Error submitting rating', ToastType.ERROR);
+
       }
     );
   }

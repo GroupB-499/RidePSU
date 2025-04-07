@@ -9,15 +9,15 @@
             <p class="card-text">{{ rat.feedback }}</p>
   
             <!-- If no reply, show reply form -->
-            <form *ngIf="!rat.reply" [formGroup]="getReplyForm(rat.id)" (ngSubmit)="submitReply(rat.id)">
+            <!-- <form *ngIf="!rat.reply" [formGroup]="getReplyForm(rat.id)" (ngSubmit)="submitReply(rat.id)">
               <input formControlName="replyText" class="form-control mb-2" placeholder="Write a reply..." />
               <button type="submit" class="btn btn-primary btn-sm">Reply</button>
-            </form>
+            </form> -->
   
             <!-- If reply exists, show it -->
-            <div *ngIf="rat.reply" class="alert alert-info mt-3">
+            <!-- <div *ngIf="rat.reply" class="alert alert-info mt-3">
               <strong>Admin Reply:</strong> {{ rat.reply }}
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

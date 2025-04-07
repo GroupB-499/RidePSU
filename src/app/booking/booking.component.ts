@@ -148,7 +148,7 @@ checkBookingAvailability(): void {
         return;
     }
     if(this.bookingCount == null || this.bookingCount >= 13){
-        this.toast.show("Booking not available!");
+        this.toast.show("The trip you selected does not exist, please refer to schedules page.");
         return;
     }
     if (this.tripForm.valid) {

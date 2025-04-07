@@ -5,14 +5,14 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem('authToken'));
-  private isPassenger = new BehaviorSubject<boolean>(
+  public loggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem('authToken'));
+  public isPassenger = new BehaviorSubject<boolean>(
     (() => {
       const userInfo = localStorage.getItem('userInfo');
-      return userInfo ? JSON.parse(userInfo).role !== 'driver' : false;
+      return userInfo ? JSON.parse(userInfo).role === 'user' : false;
     })()
   );
-  private isAdmin = new BehaviorSubject<boolean>(
+  public isAdmin = new BehaviorSubject<boolean>(
     (() => {
       const userInfo = localStorage.getItem('userInfo');
       return userInfo ? JSON.parse(userInfo).role === 'admin' : false;

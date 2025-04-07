@@ -45,7 +45,7 @@
                 <li (click)="toggleDropdown()" routerLink="/myRatings"><a>My Ratings</a></li>
               </div>
               <div *ngIf="!isPassenger">
-                <li (click)="toggleDropdown()" routerLink="/myComplaints"><a>My Complaints</a></li>
+                <li (click)="toggleDropdown()" routerLink="/myComplaints"><a>My Reports</a></li>
               </div>
                 </ul>
               </li>
@@ -76,7 +76,7 @@
             <li><a routerLink="/notifications" (click)="toggleMenu()">Notifications</a></li>
             <li><a routerLink="/edit-user" (click)="toggleMenu()">Edit Account</a></li>
             <li *ngIf="isPassenger"><a routerLink="/myRatings" (click)="toggleMenu()">My Ratings</a></li>
-            <li *ngIf="!isPassenger"><a routerLink="/myComplaints" (click)="toggleMenu()">My Complaints</a></li>
+            <li *ngIf="!isPassenger"><a routerLink="/myComplaints" (click)="toggleMenu()">My Reports</a></li>
             <li *ngIf="isPassenger"><a routerLink="/myBookings" (click)="toggleMenu()">View Booking</a></li>
             <li (click)="logout()">
               <a class="user-profile"><mat-icon>exit_to_app</mat-icon> Log Out</a>
@@ -121,7 +121,7 @@
                 <span class="nav_name">Ratings</span> </a>
                 <a routerLink="/admin-complaints" class="nav_link" style="text-decoration: none;">
                   <i class="bx bx-info-circle nav_icon"></i>
-                  <span class="nav_name">Complaints</span> </a>
+                  <span class="nav_name">Driver Reports</span> </a>
               <a (click)="logout()" class="nav_link" style="text-decoration: none;">
                 <i class="bx bx-log-out nav_icon"></i>
                 <span class="nav_name">SignOut</span>

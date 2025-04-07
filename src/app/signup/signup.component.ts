@@ -111,7 +111,7 @@ export class SignupComponent {
     // Make the HTTP POST request to the signup API
     this.http.post(`${baseUrl}/api/signup`, formData).subscribe({
       next: (response: any) => {
-        this.toast.show(response.message || 'Signup successful!', ToastType.SUCCESS);
+        this.toast.show(this.authService.getUserInfo().role != "admin"?"Passenger created successfully!":"Driver created successfully!", ToastType.SUCCESS);
 
         if(this.authService.getUserInfo().role != "admin"){
           this.authService.login(response.user, response.token);

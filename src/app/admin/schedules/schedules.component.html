@@ -25,11 +25,11 @@
             <td>{{ schedule.time }}</td>
             <td>{{ schedule.transportType }}</td>
             <td>
-              <button class="btn btn-primary m-1" 
+              <!-- <button class="btn btn-primary m-1" 
                       [routerLink]="['/schedule-form']" 
                       [queryParams]="{ id: schedule.id, pickup: schedule.pickupLocations, dropoff: schedule.dropoffLocations, time: schedule.time, transportType: schedule.transportType }">
                 Edit
-              </button>
+              </button> -->
               <button class="btn btn-danger m-1" (click)="deleteSchedule(schedule.id)">Delete</button>
             </td>
           </tr>

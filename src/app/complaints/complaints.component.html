@@ -1,5 +1,14 @@
-<div class="ratings-container">
-    <h2>Register a complaint</h2>
-    <textarea [(ngModel)]="feedback" placeholder="Write complaint..." rows="4"></textarea>
-    <button mat-raised-button color="primary" (click)="submitComplaint()">Submit</button>
-</div>
+<div class="modal-header">
+    <h5 class="modal-title">Register a Complaint</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+  </div>
+  
+  <div class="modal-body">
+    <textarea [(ngModel)]="feedback" class="form-control" placeholder="Write complaint..." rows="4"></textarea>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="submitComplaint()">Submit</button>
+  </div>
+  

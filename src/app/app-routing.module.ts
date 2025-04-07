@@ -22,34 +22,40 @@ import { ScheduleFormComponent } from './admin/schedule-form/schedule-form.compo
 import { AdminComplaintsComponent } from './admin/admin-complaints/admin-complaints.component';
 import { MyComplaintsComponent } from './my-complaints/my-complaints.component';
 import { ComplaintsComponent } from './complaints/complaints.component';
+import { LoginGuard } from './guards/login.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { SignUpGuard } from './guards/signup.guard';
+import { PassengerGuard } from './guards/passenger.guard';
 
 
 const routes: Routes = [
+  // normal routes
   {
     path:'',redirectTo: 'login',pathMatch:'full'
-  },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'map', component: MapScreenComponent },
-  { path: 'signup', component: SignupComponent },
+  },{ path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [SignUpGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [PassengerGuard] },
+  { path: 'map', component: MapScreenComponent, canActivate: [PassengerGuard] },
   { path: 'edit-user', component: EditAccountComponent },
-  { path: 'reset', component: ResetPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'schedules', component: SchedulesComponent },
-  { path: 'booking', component: BookingComponent },
-  { path: 'notifications', component: NotificationsComponent },
-  { path: 'myBookings', component: MyBookingsComponent },
-  { path: 'driverDash', component: DriverDashComponent },
-  { path: 'ratings', component: RatingsComponent },
-  { path: 'complaints', component: ComplaintsComponent },
-  { path: 'myRatings', component: MyRatingsComponent },
-  { path: 'myComplaints', component: MyComplaintsComponent },
-  { path: 'passenger', component: PassengersComponent },
-  { path: 'driver', component: DriversComponent },
-  { path: 'admin-schedules', component: AdminSchedulesComponent },
-  { path: 'admin-ratings', component: AdminRatingsComponent },
-  { path: 'admin-complaints', component: AdminComplaintsComponent },
-  { path: 'schedule-form', component: ScheduleFormComponent },
+  { path: 'reset', component: ResetPasswordComponent, canActivate: [LoginGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [PassengerGuard] },
+  { path: 'schedules', component: SchedulesComponent, canActivate: [PassengerGuard] },
+  { path: 'booking', component: BookingComponent ,  canActivate: [PassengerGuard]},
+  { path: 'notifications', component: NotificationsComponent, canActivate: [PassengerGuard] },
+  { path: 'myBookings', component: MyBookingsComponent, canActivate: [PassengerGuard] },
+  { path: 'driverDash', component: DriverDashComponent, canActivate: [PassengerGuard] },
+  { path: 'ratings', component: RatingsComponent, canActivate: [PassengerGuard] },
+  { path: 'complaints', component: ComplaintsComponent ,  canActivate: [PassengerGuard]},
+  { path: 'myRatings', component: MyRatingsComponent, canActivate: [PassengerGuard] },
+  { path: 'myComplaints', component: MyComplaintsComponent ,  canActivate: [PassengerGuard]},
+
+  // admin panel routes
+  { path: 'passenger', component: PassengersComponent, canActivate: [AdminGuard] },
+  { path: 'driver', component: DriversComponent, canActivate: [AdminGuard] },
+  { path: 'admin-schedules', component: AdminSchedulesComponent , canActivate: [AdminGuard] },
+  { path: 'admin-ratings', component: AdminRatingsComponent,  canActivate: [AdminGuard] },
+  { path: 'admin-complaints', component: AdminComplaintsComponent,  canActivate: [AdminGuard] },
+  { path: 'schedule-form', component: ScheduleFormComponent,  canActivate: [AdminGuard] },
 
 ];
 

@@ -5,6 +5,9 @@ import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
 import { ToastService, ToastType } from '../toast.service';
 import { WebSocketService } from '../websocket.service';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ComplaintsComponent } from '../complaints/complaints.component';
 
 @Component({
   selector: 'app-map-screen',
@@ -27,7 +30,9 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private wsService: WebSocketService,private toast: ToastService
+    private router: Router,
+    private wsService: WebSocketService,private toast: ToastService,
+      private modalService: NgbModal,
   ) { }
   customDelayTime: number = 0;
   delayTimer = 0;
@@ -252,6 +257,17 @@ export class MapScreenComponent implements OnInit, OnDestroy {
     this.isRideActive = false;
     clearInterval(this.interval);
     this.wsService.sendMessage({ type: "ride_ended",userId: this.authService.getUserInfo().userId, scheduleId: this.booking.id});
+  }
+  openComplaintModal() {
+    const userInfo = this.authService.getUserInfo();
+
+    const modalRef = this.modalService.open(ComplaintsComponent, {
+      centered: true,
+      backdrop: 'static',
+    });
+
+    modalRef.componentInstance.userId = userInfo.userId;
+    modalRef.componentInstance.username = userInfo.name;
   }
 
   trackDriverLocation() {

@@ -1,33 +1,27 @@
+import { Component, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
 import { ToastService, ToastType } from '../toast.service';
 import { WebSocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-complaints',
-  templateUrl: './complaints.component.html',
-  styleUrls: ['./complaints.component.css']
+  templateUrl: './complaints.component.html'
 })
 export class ComplaintsComponent {
-  feedback = '';
-  userId: string = '';
-  username: string = '';
+  @Input() userId: string = '';
+  @Input() username: string = '';
+
+  feedback: string = '';
   apiUrl = `${baseUrl}/api/submit-complaint`;
 
   constructor(
-    private router: Router,
+    public activeModal: NgbActiveModal,
     private http: HttpClient,
-    private authService: AuthService,
     private toast: ToastService,
     private wsService: WebSocketService
-  ) { }
-
-  ngOnInit() {
-    this.userId = this.authService.getUserInfo().userId;
-    this.username = this.authService.getUserInfo().name;
+  ) {
     this.wsService.connect();
   }
 
@@ -40,17 +34,18 @@ export class ComplaintsComponent {
 
     this.http.post(this.apiUrl, complaintData).subscribe(
       () => {
-        console.log('Complaint submitted successfully');
-                this.toast.show('Complaint submitted successfully', ToastType.SUCCESS);
-    this.wsService.sendMessage({ type: "complaint",});
-        
-        this.router.navigate(['/home']);
+        this.toast.show('Complaint submitted successfully', ToastType.SUCCESS);
+        this.wsService.sendMessage({ type: "complaint" });
+        this.activeModal.close(); // close the modal on success
       },
       error => {
         console.error('Error submitting complaint:', error);
-                this.toast.show('Error submitting complaint', ToastType.ERROR);
-        
+        this.toast.show('Error submitting complaint', ToastType.ERROR);
       }
     );
+  }
+
+  cancel() {
+    this.activeModal.dismiss();
   }
 }

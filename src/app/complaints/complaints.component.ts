@@ -34,13 +34,13 @@ export class ComplaintsComponent {
 
     this.http.post(this.apiUrl, complaintData).subscribe(
       () => {
-        this.toast.show('Complaint submitted successfully', ToastType.SUCCESS);
+        this.toast.show('Vehicle Issue reported successfully', ToastType.SUCCESS);
         this.wsService.sendMessage({ type: "complaint" });
         this.activeModal.close(); // close the modal on success
       },
       error => {
-        console.error('Error submitting complaint:', error);
-        this.toast.show('Error submitting complaint', ToastType.ERROR);
+        console.error('Error reporting Vehicle Issue:', error);
+        this.toast.show('Error reporting Vehicle Issue', ToastType.ERROR);
       }
     );
   }

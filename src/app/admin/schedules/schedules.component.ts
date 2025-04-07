@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { baseUrl } from 'src/app/configs';
+import { ConfirmService } from 'src/app/confirm.service';
 import { ToastService, ToastType } from 'src/app/toast.service';
 @Component({
   selector: 'app-schedules',
@@ -18,6 +19,7 @@ schedulesList: any= [];
 
   constructor(private http: HttpClient,
     private toast: ToastService,
+    private confirmService: ConfirmService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -64,8 +66,8 @@ schedulesList: any= [];
     this.schedules = [];
     this.schedules = this.schedulesList.slice(this.pageIndex, endIndex);
   }
-  deleteSchedule(scheduleId: string) {
-    if (confirm('Are you sure you want to delete this schedule?')) {
+  async deleteSchedule(scheduleId: string) {
+    if (await this.confirmService.confirm('Delete User', 'Are you sure you want to delete this user?')) {
       this.http.delete(`${baseUrl}/api/delete-schedule/${scheduleId}`).subscribe({
         next: () => {
           this.schedulesList = this.schedulesList.filter((schedule:  any) => schedule.id !== scheduleId);

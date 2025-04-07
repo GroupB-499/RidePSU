@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AssignDriverModalComponent } from 'src/app/assign-driver-modal/assign-driver-modal.component';
 import { baseUrl } from 'src/app/configs';
+import { ConfirmService } from 'src/app/confirm.service';
 import { ToastService, ToastType } from 'src/app/toast.service';
 
 @Component({
@@ -24,6 +25,7 @@ export class DriversComponent {
   constructor(private http: HttpClient,
     private toast: ToastService,
     private modalService: NgbModal,
+    private confirmService: ConfirmService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -111,8 +113,8 @@ export class DriversComponent {
     });
   }
   
-  deleteUser(userId: string) {
-    if (confirm('Are you sure you want to delete this user?')) {
+  async deleteUser(userId: string) {
+    if (await this.confirmService.confirm('Delete User', 'Are you sure you want to delete this user?')) {
       this.http.delete(`${baseUrl}/api/delete-user/${userId}`).subscribe({
         next: () => {
           // Update the passengers list after deletion

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { baseUrl } from 'src/app/configs';
+import { ConfirmService } from 'src/app/confirm.service';
 import { ToastService, ToastType } from 'src/app/toast.service';
 import { WebSocketService } from 'src/app/websocket.service';
 
@@ -22,6 +23,7 @@ export class PassengersComponent {
   constructor(private http: HttpClient,
     private toast: ToastService,
     private wsService: WebSocketService,
+    private confirmService: ConfirmService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -113,8 +115,8 @@ export class PassengersComponent {
       }
     });
   }
-  deleteUser(userId: string) {
-    if (confirm('Are you sure you want to delete this user?')) {
+  async deleteUser(userId: string) {
+    if (await this.confirmService.confirm('Delete User', 'Are you sure you want to delete this user?')) {
       this.http.delete(`${baseUrl}/api/delete-user/${userId}`).subscribe({
         next: () => {
           // Update the passengers list after deletion

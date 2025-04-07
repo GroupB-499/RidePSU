@@ -41,6 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComplaintsComponent } from './complaints/complaints.component';
 import { MyComplaintsComponent } from './my-complaints/my-complaints.component';
 import { AdminComplaintsComponent } from './admin/admin-complaints/admin-complaints.component';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { AdminComplaintsComponent } from './admin/admin-complaints/admin-complai
     ComplaintsComponent,
     MyComplaintsComponent,
     AdminComplaintsComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,

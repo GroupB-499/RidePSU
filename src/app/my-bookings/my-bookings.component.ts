@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth-service.service';
 import { baseUrl } from '../configs';
 import { ToastService, ToastType } from '../toast.service';
+import { ConfirmService } from '../confirm.service';
 
 @Component({
   selector: 'app-my-bookings',
@@ -12,7 +13,7 @@ import { ToastService, ToastType } from '../toast.service';
 export class MyBookingsComponent {
   bookings: any[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthService,private toast: ToastService) {}
+  constructor(private http: HttpClient, private authService: AuthService,private toast: ToastService,  private confirmService: ConfirmService ) {}
 
   ngOnInit(): void {
     this.getBookings();
@@ -32,8 +33,8 @@ export class MyBookingsComponent {
   }
 
   // Cancel booking (stub)
-  cancelBooking(bookingId: string): void {
-    const confirmed = confirm('Are you sure you want to cancel this booking?');
+  async cancelBooking(bookingId: string): Promise<void> {
+    const confirmed = await this.confirmService.confirm('Delete User', 'Are you sure you want to delete this user?');
     if (confirmed) {
       this.http.delete(`${baseUrl}/api/delete-booking?bookingId=${bookingId}`)
         .subscribe({

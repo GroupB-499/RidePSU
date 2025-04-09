@@ -55,7 +55,7 @@ export class DriversComponent {
           },
           error: (error) => {
             console.error('Error assigning driver:', error);
-            this.toast.show('Failed to assign driver. Please try again later.', ToastType.ERROR);
+            this.toast.show(error['error']['message']+"\nConflicts:\n"+error['error']['conflicts'].map((e:any)=>e.time+" "), ToastType.ERROR);
           }
         });
       },

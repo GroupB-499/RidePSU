@@ -14,6 +14,8 @@ import { ToastService, ToastType } from 'src/app/toast.service';
 })
 export class DriversComponent {
 
+  list: string[] = [];
+  
   driversList: any= [];
   drivers:any = [];
   driversPerPage: number = 10;
@@ -55,7 +57,10 @@ export class DriversComponent {
           },
           error: (error) => {
             console.error('Error assigning driver:', error);
-            this.toast.show(error['error']['message']+"\nConflicts:\n"+error['error']['conflicts'].map((e:any)=>e.time+" "), ToastType.ERROR);
+            var conflicts = error['error']['conflicts'];
+            var first = conflicts[0].time;
+            var last = conflicts[conflicts.length - 1].time;
+            this.toast.show(error['error']['message']+first+" to "+last+", "+error['error']['transportType'], ToastType.ERROR);
           }
         });
       },

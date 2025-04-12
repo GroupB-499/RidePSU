@@ -34,7 +34,7 @@ export class MyBookingsComponent {
 
   // Cancel booking (stub)
   async cancelBooking(bookingId: string): Promise<void> {
-    const confirmed = await this.confirmService.confirm('Delete User', 'Are you sure you want to delete this user?');
+    const confirmed = await this.confirmService.confirm('Delete Booking', 'Are you sure you want to delete this booking?');
     if (confirmed) {
       this.http.delete(`${baseUrl}/api/delete-booking?bookingId=${bookingId}`)
         .subscribe({

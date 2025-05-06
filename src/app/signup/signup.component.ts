@@ -37,7 +37,7 @@ export class SignupComponent {
       this.accountForm.patchValue({
         role: queryRole && queryRole.trim() !== '' ? queryRole : 'user'
       });
-      if(this.accountForm.value.role == "driver"){
+      if (this.accountForm.value.role == "driver") {
         this.title = 'Add Driver';
       }
       console.log('Role:', this.accountForm.value.role);
@@ -111,21 +111,17 @@ export class SignupComponent {
     // Make the HTTP POST request to the signup API
     this.http.post(`${baseUrl}/api/signup`, formData).subscribe({
       next: (response: any) => {
-        this.toast.show(this.authService.getUserInfo().role != "admin"?"Passenger created successfully!":"Driver created successfully!", ToastType.SUCCESS);
+        this.toast.show(response.role != "user" ? "Passenger created successfully!" : "Driver created successfully!", ToastType.SUCCESS);
 
-        if(this.authService.getUserInfo().role != "admin"){
-          this.authService.login(response.user, response.token);
-          this.accountForm.reset();
-          if (response.user.role == "user") {
-            this.router.navigate(['/home']);
-  
-          } else {
-            this.router.navigate(['/driverDash']);
-          }
-        }else{
-          this.router.navigate(['/driver']);
+        this.authService.login(response.user, response.token);
+        this.accountForm.reset();
+        if (response.user.role == "user") {
+          this.router.navigate(['/home']);
+
+        } else {
+          this.router.navigate(['/driverDash']);
         }
-        
+
       },
       error: (error) => {
         console.error('Error during signup:', error.error['error']);

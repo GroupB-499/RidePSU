@@ -11,12 +11,12 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements  OnInit {
+export class AppComponent implements OnInit {
   isLoggedIn = false;
   isPassenger = false;
   isAdmin = false;
 
-  constructor(private router: Router,private authService: AuthService, private messagingService: MessagingService) {}
+  constructor(private router: Router, private authService: AuthService, private messagingService: MessagingService) { }
 
   ngOnInit() {
 
@@ -26,14 +26,31 @@ export class AppComponent implements  OnInit {
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
     });
-    this.authService.isPassenger$.subscribe((status)=>{
+    this.authService.isPassenger$.subscribe((status) => {
       this.isPassenger = status;
     });
-    this.authService.isAdmin$.subscribe((status)=>{
+    this.authService.isAdmin$.subscribe((status) => {
       this.isAdmin = status;
     });
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('Latitude:', position.coords.latitude);
+          console.log('Longitude:', position.coords.longitude);
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          if (error.code === error.PERMISSION_DENIED) {
+            alert('Location permission denied. Please enable it to continue.');
+          }
+        }
+      );
+
+    }
+
   }
-  
+
   menuOpen = false;
   showDropdown = false;
 
@@ -45,10 +62,10 @@ export class AppComponent implements  OnInit {
     this.showDropdown = !this.showDropdown;
   }
 
-  
+
   logout() {
     this.authService.logout();
-  this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 
 }
